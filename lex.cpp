@@ -40,6 +40,8 @@ private:
             {"else", TokenType::KEYWORD},
             {"while", TokenType::KEYWORD},
             {"return", TokenType::KEYWORD},
+            {"class", TokenType::KEYWORD},
+            {"string", TokenType::KEYWORD},
         };
     }
 
@@ -125,6 +127,8 @@ public:
             if (isAlphabetical(currentChar))
             {
                 string word = getNextWord();
+
+                //cpp retorna vetor.end qd find nao funciona, portanto tem que ser diferente disso
                 if (keywords.find(word) != keywords.end())
                 {
                     tokens.emplace_back(TokenType::KEYWORD,
