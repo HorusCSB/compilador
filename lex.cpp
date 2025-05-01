@@ -41,6 +41,7 @@ private:
             {"while", TokenType::KEYWORD},
             {"return", TokenType::KEYWORD},
             {"class", TokenType::KEYWORD},
+            {"string", TokenType::KEYWORD},
         };
     }
 
