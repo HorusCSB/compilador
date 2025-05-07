@@ -205,9 +205,6 @@ public:
             }
         }
 
-  git config --global user.email "henrique.rosa.araujo@gmail.com"
-  git config --global user.name "hrq-araujo"
-
         return tokens;
     }
 };
