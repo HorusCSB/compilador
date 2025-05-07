@@ -13,6 +13,8 @@ enum class TokenType
     FLOAT,
     OPERATOR,
     PUNCTUATOR,
+    STRING_LITERAL,
+    STRING,
     UNKNOWN
 };
 
@@ -66,7 +68,7 @@ private:
     }
 
     // OBS: Não verifica se a primeira letra é um número
-    string getNextWord()
+    string getWord()
     {
         size_t start = position;
         while (position < input.length() && isAlphaNumeric(input[position]))
@@ -76,8 +78,18 @@ private:
         return input.substr(start, position - start);
     }
 
+    string getWordInStringFormat()
+    {
+        size_t start = position;
+        while (position < input.length() && input[position] != '"')
+        {
+            position++;
+        }
+        return input.substr(start, position - start);
+    }
+
     //  OBS: o hasDecimal evita mal formação de float como 1.0.0
-    string getNextNumber()
+    string getNumber()
     {
         size_t start = position;
         bool hasDecimal = false;
@@ -126,7 +138,7 @@ public:
             // identifica palavras chave que não devem ser começadas em número
             if (isAlphabetical(currentChar))
             {
-                string word = getNextWord();
+                string word = getWord();
 
                 //cpp retorna vetor.end qd find nao funciona, portanto tem que ser diferente disso
                 if (keywords.find(word) != keywords.end())
@@ -143,7 +155,7 @@ public:
             // identifica float ou inteiro
             else if (isDigit(currentChar))
             {
-                string number = getNextNumber();
+                string number = getNumber();
                 if (number.find('.') != string::npos)
                 {
                     tokens.emplace_back(
@@ -170,6 +182,20 @@ public:
                                     string(1, currentChar));
                 position++;
             }
+            else if(currentChar == '"')
+            {
+                tokens.emplace_back(TokenType::STRING_LITERAL,
+                    string(1, currentChar));
+                position++;
+
+                string newString = getWordInStringFormat();
+
+                tokens.emplace_back(TokenType::STRING, newString);
+
+                tokens.emplace_back(TokenType::STRING_LITERAL,
+                    string(1, currentChar));
+                position++;
+            }
             // Handle unknown characters
             else
             {
@@ -178,6 +204,9 @@ public:
                 position++;
             }
         }
+
+  git config --global user.email "henrique.rosa.araujo@gmail.com"
+  git config --global user.name "hrq-araujo"
 
         return tokens;
     }
@@ -199,6 +228,10 @@ string getTokenTypeName(TokenType type)
         return "OPERATOR";
     case TokenType::PUNCTUATOR:
         return "PUNCTUATOR";
+    case TokenType::STRING:
+        return "STRING";
+    case TokenType::STRING_LITERAL:
+        return "STRING_LITERAL";
     case TokenType::UNKNOWN:
         return "UNKNOWN";
     default:
@@ -219,7 +252,7 @@ int main()
 {
     string sourceCode
         = "int main() { float x = 3.14; float y=3.15; "
-          "float z=x+y; return 0; }";
+          "float z=x+y; string=\"abcdefg\"; return 0; }";
 
     // Cria o análisador léxico instanciando o construtor dele com o código fonte
     LexicalAnalyzer lexer(sourceCode);
