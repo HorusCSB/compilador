@@ -18,15 +18,37 @@ using namespace std;
 // Local para definirmos tipos diferentes de tokens e atribuir numeros a eles
 enum class TokenType
 {
-    KEYWORD,    // palavras chave
-    IDENTIFIER, // nome de variável
-    INTEGER,    // números inteiros
-    FLOAT,      // números flutuantes
-    OPERATOR,   // + - == != =
-    PUNCTUATOR, // ;
-    STRING_LITERAL,
+    KEYWORD,
+    IDENTIFIER,
+    INTEGER,
+    FLOAT,
+    AND,
+    OR,
+    MINUS,
+    PLUS,
+    EQUAL,
+    DIFF,
+    MINOR,
+    BIGGER,
+    DIVISION,
+    BIGGER_EQUAL,
+    MINOR_EQUAL,
+    CLASS,
+    IF,
+    ELSE,
+    WHILE,
+    END_LINE,
+    STRING_LITERAL, // aspas duplas
     STRING,
-    UNKNOWN     // fora da tabelas
+    OPEN_PARENTHESIS,  // ()
+    CLOSE_PARENTHESIS, // ()
+    OPEN_BRACKET,      // []
+    CLOSE_BRACKET,     // []
+    OPEN_BRACES,       // {}
+    CLOSE_BRACRES,     // {}
+    FUNCTION,
+    RETURN,
+    UNKNOWN
 };
 
 struct Token
@@ -47,14 +69,14 @@ private:
     void initKeywords()
     {
         keywords = {
-            {"int", TokenType::KEYWORD},
-            {"float", TokenType::KEYWORD},
-            {"if", TokenType::KEYWORD},
-            {"else", TokenType::KEYWORD},
-            {"while", TokenType::KEYWORD},
-            {"return", TokenType::KEYWORD},
-            {"class", TokenType::KEYWORD},
-            {"string", TokenType::KEYWORD},
+            {"int", TokenType::INTEGER},
+            {"float", TokenType::FLOAT},
+            {"if", TokenType::IF},
+            {"else", TokenType::ELSE},
+            {"while", TokenType::WHILE},
+            {"return", TokenType::RETURN},
+            {"class", TokenType::CLASS},
+            {"string", TokenType::STRING},
         };
     }
 
@@ -146,73 +168,74 @@ public:
                 continue;
             }
 
-            // identifica palavras chave que não devem ser começadas em número
-            if (isAlphabetical(currentChar))
+            switch (currentChar)
             {
-                string word = getWord();
+            // operadores
+            case '+':
+            case '-':
+            case '*':
+            case '/':
+            case '=':
+                tokens.emplace_back(TokenType::EQUAL, string(1, currentChar));
+                position++;
+                break;
 
-                // cpp retorna vetor.end qd find nao funciona, portanto tem que ser diferente disso
-                if (keywords.find(word) != keywords.end())
+            // separadores
+            case '(':
+            case ')':
+            case '{':
+            case '}':
+            case ';':
+                tokens.emplace_back(TokenType::END_LINE, string(1, currentChar));
+                position++;
+                break;
+
+            // strings
+            case '"':
+                tokens.emplace_back(TokenType::STRING_LITERAL, string(1, currentChar));
+                position++;
+
                 {
-                    tokens.emplace_back(TokenType::KEYWORD,
-                                        word);
+                    string newString = getWordInStringFormat();
+                    tokens.emplace_back(TokenType::STRING, newString);
+                }
+
+                tokens.emplace_back(TokenType::STRING_LITERAL, string(1, currentChar));
+                position++;
+                break;
+
+            // por padrão, verifica se é letra, número ou desconhecido
+            default:
+                if (isAlphabetical(currentChar))
+                {
+                    string word = getWord();
+                    if (keywords.find(word) != keywords.end())
+                    {
+                        tokens.emplace_back(TokenType::KEYWORD, word);
+                    }
+                    else
+                    {
+                        tokens.emplace_back(TokenType::IDENTIFIER, word);
+                    }
+                }
+                else if (isDigit(currentChar))
+                {
+                    string number = getNumber();
+                    if (number.find('.') != string::npos)
+                    {
+                        tokens.emplace_back(TokenType::FLOAT, number);
+                    }
+                    else
+                    {
+                        tokens.emplace_back(TokenType::INTEGER, number);
+                    }
                 }
                 else
                 {
-                    tokens.emplace_back(
-                        TokenType::IDENTIFIER, word);
+                    tokens.emplace_back(TokenType::UNKNOWN, string(1, currentChar));
+                    position++;
                 }
-            }
-            // identifica float ou inteiro
-            else if (isDigit(currentChar))
-            {
-                string number = getNumber();
-                if (number.find('.') != string::npos)
-                {
-                    tokens.emplace_back(
-                        TokenType::FLOAT, number);
-                }
-                else
-                {
-                    tokens.emplace_back(
-                        TokenType::INTEGER, number);
-                }
-            }
-            // identifica tokens de operação lóǵica
-            // OBS: nesse caso não estamos dando cobertura à >= e afins
-            else if (currentChar == '+' || currentChar == '-' || currentChar == '*' || currentChar == '/' || currentChar == '=')
-            {
-                tokens.emplace_back(TokenType::OPERATOR,
-                                    string(1, currentChar));
-                position++;
-            }
-            // identifica separadores
-            else if (currentChar == '(' || currentChar == ')' || currentChar == '{' || currentChar == '}' || currentChar == ';')
-            {
-                tokens.emplace_back(TokenType::PUNCTUATOR,
-                                    string(1, currentChar));
-                position++;
-            }
-            else if(currentChar == '"')
-            {
-                tokens.emplace_back(TokenType::STRING_LITERAL,
-                    string(1, currentChar));
-                position++;
-
-                string newString = getWordInStringFormat();
-
-                tokens.emplace_back(TokenType::STRING, newString);
-
-                tokens.emplace_back(TokenType::STRING_LITERAL,
-                    string(1, currentChar));
-                position++;
-            }
-            // Handle unknown characters
-            else
-            {
-                tokens.emplace_back(TokenType::UNKNOWN,
-                                    string(1, currentChar));
-                position++;
+                break;
             }
         }
 
@@ -233,14 +256,58 @@ string getTokenTypeName(TokenType type)
         return "INTEGER";
     case TokenType::FLOAT:
         return "FLOAT";
-    case TokenType::OPERATOR:
-        return "OPERATOR";
-    case TokenType::PUNCTUATOR:
-        return "PUNCTUATOR";
-    case TokenType::STRING:
-        return "STRING";
+    case TokenType::AND:
+        return "AND";
+    case TokenType::OR:
+        return "OR";
+    case TokenType::MINUS:
+        return "MINUS";
+    case TokenType::PLUS:
+        return "PLUS";
+    case TokenType::EQUAL:
+        return "EQUAL";
+    case TokenType::DIFF:
+        return "DIFF";
+    case TokenType::MINOR:
+        return "MINOR";
+    case TokenType::BIGGER:
+        return "BIGGER";
+    case TokenType::DIVISION:
+        return "DIVISION";
+    case TokenType::BIGGER_EQUAL:
+        return "BIGGER_EQUAL";
+    case TokenType::MINOR_EQUAL:
+        return "MINOR_EQUAL";
+    case TokenType::CLASS:
+        return "CLASS";
+    case TokenType::IF:
+        return "IF";
+    case TokenType::ELSE:
+        return "ELSE";
+    case TokenType::WHILE:
+        return "WHILE";
+    case TokenType::END_LINE:
+        return "END_LINE";
     case TokenType::STRING_LITERAL:
         return "STRING_LITERAL";
+    case TokenType::STRING:
+        return "STRING";
+    case TokenType::OPEN_PARENTHESIS:
+        return "OPEN_PARENTHESIS";
+    case TokenType::CLOSE_PARENTHESIS:
+        return "CLOSE_PARENTHESIS";
+    case TokenType::OPEN_BRACKET:
+        return "OPEN_BRACKET";
+    case TokenType::CLOSE_BRACKET:
+        return "CLOSE_BRACKET";
+    case TokenType::OPEN_BRACES:
+        return "OPEN_BRACES";
+    case TokenType::CLOSE_BRACRES:
+        return "CLOSE_BRACRES";
+    case TokenType::FUNCTION:
+        return "FUNCTION";
+    case TokenType::RETURN:
+        return "RETURN";
     case TokenType::UNKNOWN:
         return "UNKNOWN";
     default:
@@ -260,18 +327,17 @@ void printTokens(const vector<Token> &tokens)
 
 int main()
 {
-    string sourceCode
-        = "int main() { float x = 3.14; float y=3.15; "
-          "float z=x+y; string=\"abcdefg\"; return 0; }";
+    string src = "int main() { float x = 3.14; float y=3.15; "
+                 "float z=x+y; string=\"abcdefg\"; return 0; }";
 
     // Cria o análisador léxico instanciando o construtor dele com o código fonte
-    LexicalAnalyzer lexer(sourceCode);
+    LexicalAnalyzer lexer(src);
 
     // Utiliza a função tokenize do analisador léxico instanciado e guarda em tokens
     vector<Token> tokens = lexer.tokenize();
 
     // Imprime código original
-    cout << "Source code: " << sourceCode << endl
+    cout << "Source code: " << src << endl
          << endl;
 
     // Imprime tokens
