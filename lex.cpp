@@ -157,7 +157,7 @@ public:
             }
             // identifica tokens de operação lóǵica
             // OBS: nesse caso não estamos dando cobertura à >= e afins
-            else if (currentChar == '+' || currentChar == '-' || currentChar == '*' || currentChar == '/' || currentchar == '=')
+            else if (currentChar == '+' || currentChar == '-' || currentChar == '*' || currentChar == '/' || currentChar == '=')
             {
                 tokens.emplace_back(TokenType::OPERATOR,
                                     string(1, currentChar));
