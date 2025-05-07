@@ -1,3 +1,14 @@
+/*
+
+1 - estrutura de decisão
+2 - estrutura de repetição
+3 - reconhecer/manipular funções (métodos)
+4 - reconhecer/manipular vetores (array)
+5 - reconhecer/manipular palavras, simbolos e funções reservados (printf)
+6 - reconhecer/manipular tipos de variáveis (int float string)
+
+*/
+
 #include <iostream>
 #include <string>
 #include <unordered_map>
@@ -7,15 +18,15 @@ using namespace std;
 // Local para definirmos tipos diferentes de tokens e atribuir numeros a eles
 enum class TokenType
 {
-    KEYWORD,
-    IDENTIFIER,
-    INTEGER,
-    FLOAT,
-    OPERATOR,
-    PUNCTUATOR,
+    KEYWORD,    // palavras chave
+    IDENTIFIER, // nome de variável
+    INTEGER,    // números inteiros
+    FLOAT,      // números flutuantes
+    OPERATOR,   // + - == != =
+    PUNCTUATOR, // ;
     STRING_LITERAL,
     STRING,
-    UNKNOWN
+    UNKNOWN     // fora da tabelas
 };
 
 struct Token
@@ -140,7 +151,7 @@ public:
             {
                 string word = getWord();
 
-                //cpp retorna vetor.end qd find nao funciona, portanto tem que ser diferente disso
+                // cpp retorna vetor.end qd find nao funciona, portanto tem que ser diferente disso
                 if (keywords.find(word) != keywords.end())
                 {
                     tokens.emplace_back(TokenType::KEYWORD,
@@ -212,7 +223,8 @@ public:
 // Converter TokenType para string para printar
 string getTokenTypeName(TokenType type)
 {
-    switch (type) {
+    switch (type)
+    {
     case TokenType::KEYWORD:
         return "KEYWORD";
     case TokenType::IDENTIFIER:
@@ -237,9 +249,10 @@ string getTokenTypeName(TokenType type)
 }
 
 // Função impressora
-void printTokens(const vector<Token>& tokens)
+void printTokens(const vector<Token> &tokens)
 {
-    for (const auto& token : tokens) {
+    for (const auto &token : tokens)
+    {
         cout << "Type: " << getTokenTypeName(token.type)
              << ", Value: " << token.value << endl;
     }
@@ -258,7 +271,8 @@ int main()
     vector<Token> tokens = lexer.tokenize();
 
     // Imprime código original
-    cout << "Source code: " << sourceCode << endl << endl;
+    cout << "Source code: " << sourceCode << endl
+         << endl;
 
     // Imprime tokens
     cout << "Tokens Generate by Lexical Analyzer:" << endl;
