@@ -1,11 +1,22 @@
 /*
 
+parte-1
+
 1 - estrutura de decisão
 2 - estrutura de repetição
 3 - reconhecer/manipular funções (métodos)
 4 - reconhecer/manipular vetores (array)
 5 - reconhecer/manipular palavras, simbolos e funções reservados (printf)
 6 - reconhecer/manipular tipos de variáveis (int float string)
+
+*/
+/*
+
+parte-2
+
+1 - rececba como entrada a sequencia de tokens da analise lexica
+2 - gerar uma árvore sintática que será lida por ASD
+3 - 
 
 */
 
