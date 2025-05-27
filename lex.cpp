@@ -26,6 +26,7 @@ enum class TokenType
     OR,
     MINUS,
     PLUS,
+    MULTIPLY,
     EQUAL,
     DIFF,
     MINOR,
@@ -172,9 +173,21 @@ public:
             {
             // operadores
             case '+':
+                tokens.emplace_back(TokenType::PLUS, string(1, currentChar));
+                position++;
+                break;
             case '-':
+                tokens.emplace_back(TokenType::MINUS, string(1, currentChar));
+                position++;
+                break;
             case '*':
+                tokens.emplace_back(TokenType::MULTIPLY, string(1, currentChar));
+                position++;
+                break;
             case '/':
+                tokens.emplace_back(TokenType::DIVISION, string(1, currentChar));
+                position++;
+                break;
             case '=':
                 tokens.emplace_back(TokenType::EQUAL, string(1, currentChar));
                 position++;
@@ -182,9 +195,21 @@ public:
 
             // separadores
             case '(':
+            tokens.emplace_back(TokenType::OPEN_BRACES, string(1, currentChar));
+                position++;
+                break;
             case ')':
+            tokens.emplace_back(TokenType::CLOSE_BRACRES, string(1, currentChar));
+                position++;
+                break;
             case '{':
+            tokens.emplace_back(TokenType::OPEN_BRACKET, string(1, currentChar));
+                position++;
+                break;
             case '}':
+            tokens.emplace_back(TokenType::CLOSE_BRACKET, string(1, currentChar));
+                position++;
+                break;
             case ';':
                 tokens.emplace_back(TokenType::END_LINE, string(1, currentChar));
                 position++;
