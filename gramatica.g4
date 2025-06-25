@@ -3,11 +3,10 @@ grammar gramatica;
 // java -cp "/home/tcc/Downloads/antlr-4.13.2-complete.jar" org.antlr.v4.Tool -Dlanguage=Cpp gramatica.g4 -visitor -listener -o saida
 
 // Regra inicial (onde a análise começa)
-programa : expressao EOF; // Um programa é uma expressão seguida pelo fim do arquivo
-
 
 programa:
     lista_declaracoes 
+    | expressao EOF
     ;
 
 lista_declaracoes:
@@ -25,12 +24,13 @@ declaracao_funcao:
     ;
 
 declaracao_variavel:
-    tipo_especificador ID PONTO_V
+    tipo_especificador ID END_LINE
     ;
 
 
 tipo_especificador:
     INT
+    | FLOAT
     | STRING
     ;
 
@@ -64,21 +64,21 @@ comando:
     ;
 
 atribuicao:
-    ID RECEBE expressao PONTO_V
-    | ID RECEBE chamada_funcao
+    ID RECEBA expressao END_LINE
+    | ID RECEBA chamada_funcao
     ;
 
 chamada_funcao:
-    ID L_PARENTESES lista_expressoes R_PARENTESES PONTO_V
+    ID L_PARENTESES lista_expressoes R_PARENTESES END_LINE
     ;
 
 condicional:
-    SE L_PARENTESES expressao R_PARENTESES bloco
-    | SE L_PARENTESES expressao R_PARENTESES bloco ENTAO bloco
+    IF L_PARENTESES expressao R_PARENTESES bloco
+    | IF L_PARENTESES expressao R_PARENTESES bloco WHILE bloco
     ;
 
 repeticao:
-    ENQUANTO L_PARENTESES lista_expressoes R_PARENTESES bloco
+    WHILE L_PARENTESES lista_expressoes R_PARENTESES bloco
     ;
 
 lista_expressoes:
@@ -88,7 +88,7 @@ lista_expressoes:
     ;
 
 retorno:
-    RETORNA expressao PONTO_V
+    RETURN expressao END_LINE
     ;
 
 expressao:
@@ -101,7 +101,7 @@ expressao:
     | expressao MAIOR expressao
     | expressao MAIOR_IGUAL expressao
     | expressao IGUAL expressao
-    | expressao DIFERENTE expressao
+    | expressao DIFF expressao
     | termo_operacao
     ;
 
@@ -113,19 +113,20 @@ termo_operacao:
 
 base_expressao:
     ID
-    | NUMERO
+    | INT
     | L_PARENTESES expressao R_PARENTESES
     ;
 
 // Regras Léxicas (Tokens)
 ID: [a-zA-Z_][a-zA-Z_0-9]*;
-NUMERO : [0-9]+ ;
+INT : [0-9]+ ;
+FLOAT: [+-]?([0-9]?[.])?[0-9]+;
 MAIS   : '+' ; 
 MENOS  : '-' ;
 MULT   : '*' ;
-DIV    : '/' ;
-LPAREN : '(' ;
-RPAREN : ')' ;
+DIVIDE    : '/' ;
+L_PARENTESES : '(' ;
+R_PARENTESES : ')' ;
 AND : '&&';
 OR : '||';
 IGUAL : '==';
@@ -144,10 +145,11 @@ STRING_LITERAL : '"'; // aspas duplas
 STRING : [^.*$];
 LBARRA : '[';  
 RBARRA : ']'; 
-LCHAVE : '{';   
-RCHAVE : '}'; 
+L_CHAVE : '{';   
+R_CHAVE : '}'; 
 FUNCTION : 'function';
 RETURN : 'return';
+RECEBA : '=';
 UNKNOWN : . ;
 
 
