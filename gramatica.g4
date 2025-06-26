@@ -4,153 +4,204 @@ grammar gramatica;
 
 // Regra inicial (onde a análise começa)
 
-programa:
-    lista_declaracoes 
-    | expressao EOF
+programa
+    : declaracaoClasse* declaracaoFuncao* blocoStart EOF
     ;
 
-lista_declaracoes:
-    declaracao
-    | declaracao lista_declaracoes
+declaracaoClasse
+    : CLASS ID L_CHAVE corpoClasse* R_CHAVE
     ;
 
-declaracao:
-    declaracao_funcao
-    | declaracao_variavel
+corpoClasse
+    : declaracaoVariavel
     ;
 
-declaracao_funcao:
-    tipo_especificador ID L_PARENTESES parametros_lista R_PARENTESES bloco
+blocoStart
+    : START bloco
     ;
 
-declaracao_variavel:
-    tipo_especificador ID END_LINE
+bloco
+    : L_CHAVE comando* R_CHAVE
     ;
 
-
-tipo_especificador:
-    INT
-    | FLOAT
-    | STRING
-    ;
-
-parametros_lista:
-    parametro
-    | parametro VIRGULA parametros_lista
-    |
-    ;
-
-parametro:
-    tipo_especificador ID
-    ;
-
-bloco:
-    L_CHAVE lista_comandos R_CHAVE
-    ;
-
-lista_comandos:
-    comando
-    | comando lista_comandos
-    |
-    ;
-
-comando:
-    declaracao_variavel
+comando
+    : declaracaoVariavel
     | atribuicao
-    | chamada_funcao
-    | condicional
-    | repeticao
-    | retorno
+    | estruturaWhile
+    | estruturaIf
+    | comandoPrint
+    | comandoScan
     ;
 
-atribuicao:
-    ID RECEBA expressao END_LINE
-    | ID RECEBA chamada_funcao
+declaracaoVariavel
+    : tipo ID (RECEBA (novaInstancia | expressao))? PONTOV
     ;
 
-chamada_funcao:
-    ID L_PARENTESES lista_expressoes R_PARENTESES END_LINE
+atribuicao
+    : acesso RECEBA expressao PONTOV
     ;
 
-condicional:
-    IF L_PARENTESES expressao R_PARENTESES bloco
-    | IF L_PARENTESES expressao R_PARENTESES bloco WHILE bloco
+estruturaWhile
+    : WHILE L_PARENTESE condicao R_PARENTESE bloco
     ;
 
-repeticao:
-    WHILE L_PARENTESES lista_expressoes R_PARENTESES bloco
+estruturaIf
+    : IF L_PARENTESE condicao R_PARENTESE bloco
+      estruturaElsif*
+      estruturaElse?
     ;
 
-lista_expressoes:
-    expressao
-    | expressao VIRGULA lista_expressoes
-    |
+estruturaElsif
+    : ELSE IF L_PARENTESE condicao R_PARENTESE bloco
     ;
 
-retorno:
-    RETURN expressao END_LINE
+estruturaElse
+    : ELSE bloco
     ;
 
-expressao:
-    expressao MAIS expressao
-    | expressao MENOS expressao
-    | expressao MULT expressao
-    | expressao DIVIDE expressao
-    | expressao MENOR expressao
-    | expressao MENOR_IGUAL expressao
-    | expressao MAIOR expressao
-    | expressao MAIOR_IGUAL expressao
-    | expressao IGUAL expressao
-    | expressao DIFF expressao
-    | termo_operacao
+//segue hierarquia
+//a || b && !c é interpretado como a || (b && (!c))
+condicao
+    : condicao OR condicaoAnd
+    | condicaoAnd
     ;
 
-termo_operacao:
-    base_expressao
-    | base_expressao MULT termo_operacao
-    | base_expressao DIVIDE termo_operacao
+condicaoAnd
+    : condicaoAnd AND condicaoNot
+    | condicaoNot
     ;
 
-base_expressao:
-    ID
-    | INT
-    | L_PARENTESES expressao R_PARENTESES
+condicaoNot
+    : NOT condicaoNot
+    | condicaoPrimaria
     ;
 
-// Regras Léxicas (Tokens)
-ID: [a-zA-Z_][a-zA-Z_0-9]*;
-INT : [0-9]+ ;
-FLOAT: [+-]?([0-9]?[.])?[0-9]+;
-MAIS   : '+' ; 
-MENOS  : '-' ;
-MULT   : '*' ;
-DIVIDE    : '/' ;
-L_PARENTESES : '(' ;
-R_PARENTESES : ')' ;
+condicaoPrimaria
+    : L_PARENTESE condicao R_PARENTESE
+    | acesso
+    | expressao operadorComparacao expressao
+    ;
+
+operadorComparacao
+    : IGUAL | DIFF | MENOR | MENOR_IGUAL | MAIOR | MAIOR_IGUAL
+    ;
+
+novaInstancia
+    : NEW ID L_PARENTESE R_PARENTESE
+    ;
+
+//segue hierarquia
+//3 + 4 * 5 é interpretado como 3 + (4 * 5)
+expressao
+    : expressaoSoma
+    ;
+
+expressaoSoma
+    : expressaoProduto ((SOMA | SUBTRACAO) expressaoProduto)*
+    ;
+
+expressaoProduto
+    : expressaoPrimaria ((MULTIPLICACAO | DIVISAO) expressaoPrimaria)*
+    ;
+
+expressaoPrimaria
+    : chamadaFuncao
+    | NUM_INT
+    | NUM_FLOAT
+    | STRING
+    | CHAR
+    | acesso
+    | L_PARENTESE expressao R_PARENTESE
+    ;
+
+comandoPrint
+    : PRINT L_PARENTESE (expressao) R_PARENTESE PONTOV
+    ;
+
+comandoScan
+    : SCAN L_PARENTESE acesso R_PARENTESE PONTOV
+    ;
+    
+declaracaoFuncao
+    : tipo ID L_PARENTESE parametros? R_PARENTESE blocoFuncao
+    ;
+    
+parametros
+    : parametro (VIRGULA parametro)*
+    ;
+
+parametro
+    : tipo ID
+    ;
+    
+blocoFuncao
+    : L_CHAVE comando* comandoRetorno R_CHAVE
+    ;
+    
+comandoRetorno
+    : RETURN expressao PONTOV
+    ;
+    
+chamadaFuncao
+    : ID L_PARENTESE argumentos? R_PARENTESE
+    ;
+
+argumentos
+    : expressao (VIRGULA expressao)*
+    ;
+
+acesso
+    : ID
+    | ID '.' ID
+    ;
+
+tipo
+    : TK_INT
+    | TK_FLOAT
+    | TK_STRING
+    | TK_CHAR
+    | ID // nome de classe
+    ;
+
+START : 'start';
+NUM_INT : [0-9]+ ;
+NUM_FLOAT : [0-9]+ '.' [0-9]+ ;
+STRING : '"' (~["\\] | '\\' .)* '"' ;
+CHAR : '\'' . '\'' ;
+L_CHAVE : '{';
+R_CHAVE : '}';
+L_PARENTESE : '(';
+R_PARENTESE : ')';
+VIRGULA : ',';
+PONTOV : ';';
 AND : '&&';
 OR : '||';
+NOT : '!';
 IGUAL : '==';
 DIFF : '!=';
 MENOR : '<';
 MAIOR : '>';
 MAIOR_IGUAL : '>=';
 MENOR_IGUAL : '<=';
-CLASSE : 'class';
+SOMA : '+' ; 
+SUBTRACAO  : '-' ;
+MULTIPLICACAO : '*' ;
+DIVISAO : '/' ;
+RECEBA : '=';
 IF : 'if';
 ELSE : 'else';
 WHILE : 'while';
-END_LINE : ';';
-VIRGULA : ',';
-STRING_LITERAL : '"'; // aspas duplas
-STRING : [^.*$];
-LBARRA : '[';  
-RBARRA : ']'; 
-L_CHAVE : '{';   
-R_CHAVE : '}'; 
-FUNCTION : 'function';
 RETURN : 'return';
-RECEBA : '=';
-UNKNOWN : . ;
+NEW : 'new';
+TK_INT : 'int';
+TK_FLOAT : 'flot';
+TK_STRING : 'string';
+TK_CHAR : 'char';
+CLASS : 'class';
+PRINT : 'printf';
+SCAN : 'scanf';
 
+ID : [a-zA-Z_] [a-zA-Z_0-9]* ;
 
-ESPACO : [ \t\r\n]+ -> skip ; // Ignora espaços em branco, tabulações e novas linhas
+ESPACO       : [ \t\r\n]+ -> skip ; //ignora espaco em branco
+COMENTARIO : '//' ~[\r\n]* -> skip ;
