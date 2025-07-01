@@ -60,15 +60,14 @@ estruturaElse
     ;
 
 //segue hierarquia
-//a || b && !c é interpretado como a || (b && (!c))
+// ! (not) >> && (and) >> || (or)
+// parentese acima de todos
 condicao
-    : condicao OR condicaoAnd
-    | condicaoAnd
+    : condicaoAnd (OR condicaoAnd)*
     ;
 
 condicaoAnd
-    : condicaoAnd AND condicaoNot
-    | condicaoNot
+    : condicaoNot (AND condicaoNot)*
     ;
 
 condicaoNot
@@ -194,7 +193,7 @@ WHILE : 'while';
 RETURN : 'return';
 NEW : 'new';
 TK_INT : 'int';
-TK_FLOAT : 'flot';
+TK_FLOAT : 'float';
 TK_STRING : 'string';
 TK_CHAR : 'char';
 CLASS : 'class';
