@@ -1,0 +1,9 @@
+{
+	"InstallScripts" : 
+	[
+		"C:/Users/Henrique-PC/Documents/repos/compilador/build/cmake_install.cmake",
+		"C:/Users/Henrique-PC/Documents/repos/compilador/build/antlr_runtime_build/cmake_install.cmake",
+		"C:/Users/Henrique-PC/Documents/repos/compilador/build/antlr_runtime_build/runtime/cmake_install.cmake"
+	],
+	"Parallel" : false
+}

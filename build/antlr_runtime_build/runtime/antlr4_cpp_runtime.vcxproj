@@ -1,0 +1,613 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+  </PropertyGroup>
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="MinSizeRel|x64">
+      <Configuration>MinSizeRel</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="RelWithDebInfo|x64">
+      <Configuration>RelWithDebInfo</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{B596348D-9E86-3F24-B9FC-5D7809C573AC}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <WindowsTargetPlatformVersion>10.0.26100.0</WindowsTargetPlatformVersion>
+    <Platform>x64</Platform>
+    <ProjectName>antlr4_cpp_runtime</ProjectName>
+    <VCProjectUpgraderObjectName>NoUpgrade</VCProjectUpgraderObjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Users\Henrique-PC\Documents\repos\compilador\build\antlr_runtime_build\runtime\Debug\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">antlr4_cpp_runtime.dir\Debug\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">antlr4_cpp_runtime</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.lib</TargetExt>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Users\Henrique-PC\Documents\repos\compilador\build\antlr_runtime_build\runtime\Release\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">antlr4_cpp_runtime.dir\Release\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">antlr4_cpp_runtime</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.lib</TargetExt>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Users\Henrique-PC\Documents\repos\compilador\build\antlr_runtime_build\runtime\MinSizeRel\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">antlr4_cpp_runtime.dir\MinSizeRel\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">antlr4_cpp_runtime</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">.lib</TargetExt>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Users\Henrique-PC\Documents\repos\compilador\build\antlr_runtime_build\runtime\RelWithDebInfo\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">antlr4_cpp_runtime.dir\RelWithDebInfo\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">antlr4_cpp_runtime</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">.lib</TargetExt>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>%(AdditionalOptions) -w -O3</AdditionalOptions>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <ForceConformanceInForLoopScope></ForceConformanceInForLoopScope>
+      <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
+      <MinimalRebuild></MinimalRebuild>
+      <Optimization>Disabled</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RemoveUnreferencedCodeData></RemoveUnreferencedCodeData>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <SupportJustMyCode></SupportJustMyCode>
+      <TreatWChar_tAsBuiltInType></TreatWChar_tAsBuiltInType>
+      <UseFullPaths>false</UseFullPaths>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;ANTLR4CPP_STATIC;CMAKE_INTDIR="Debug"</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_DEBUG;_WINDOWS;ANTLR4CPP_STATIC;CMAKE_INTDIR=\"Debug\"</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>%(AdditionalOptions) -w -O3</AdditionalOptions>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <ForceConformanceInForLoopScope></ForceConformanceInForLoopScope>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <MinimalRebuild></MinimalRebuild>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RemoveUnreferencedCodeData></RemoveUnreferencedCodeData>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <SupportJustMyCode></SupportJustMyCode>
+      <TreatWChar_tAsBuiltInType></TreatWChar_tAsBuiltInType>
+      <UseFullPaths>false</UseFullPaths>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;ANTLR4CPP_STATIC;CMAKE_INTDIR="Release"</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+      <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;ANTLR4CPP_STATIC;CMAKE_INTDIR=\"Release\"</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>%(AdditionalOptions) -w -O3</AdditionalOptions>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <ForceConformanceInForLoopScope></ForceConformanceInForLoopScope>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <MinimalRebuild></MinimalRebuild>
+      <Optimization>MinSpace</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RemoveUnreferencedCodeData></RemoveUnreferencedCodeData>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <SupportJustMyCode></SupportJustMyCode>
+      <TreatWChar_tAsBuiltInType></TreatWChar_tAsBuiltInType>
+      <UseFullPaths>false</UseFullPaths>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;ANTLR4CPP_STATIC;CMAKE_INTDIR="MinSizeRel"</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+      <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;ANTLR4CPP_STATIC;CMAKE_INTDIR=\"MinSizeRel\"</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>%(AdditionalOptions) -w -O3</AdditionalOptions>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <ForceConformanceInForLoopScope></ForceConformanceInForLoopScope>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <MinimalRebuild></MinimalRebuild>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RemoveUnreferencedCodeData></RemoveUnreferencedCodeData>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <SupportJustMyCode></SupportJustMyCode>
+      <TreatWChar_tAsBuiltInType></TreatWChar_tAsBuiltInType>
+      <UseFullPaths>false</UseFullPaths>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;ANTLR4CPP_STATIC;CMAKE_INTDIR="RelWithDebInfo"</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;ANTLR4CPP_STATIC;CMAKE_INTDIR=\"RelWithDebInfo\"</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\CMakeLists.txt">
+      <UseUtf8Encoding>Always</UseUtf8Encoding>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Building Custom Rule C:/Users/Henrique-PC/antlr4/antlr4-cpp-runtime/runtime/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/Henrique-PC/Documents/repos/compilador -BC:/Users/Henrique-PC/Documents/repos/compilador/build --check-stamp-file C:/Users/Henrique-PC/Documents/repos/compilador/build/antlr_runtime_build/runtime/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Users\Henrique-PC\Documents\repos\compilador\build\antlr_runtime_build\runtime\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Building Custom Rule C:/Users/Henrique-PC/antlr4/antlr4-cpp-runtime/runtime/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/Henrique-PC/Documents/repos/compilador -BC:/Users/Henrique-PC/Documents/repos/compilador/build --check-stamp-file C:/Users/Henrique-PC/Documents/repos/compilador/build/antlr_runtime_build/runtime/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Users\Henrique-PC\Documents\repos\compilador\build\antlr_runtime_build\runtime\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Building Custom Rule C:/Users/Henrique-PC/antlr4/antlr4-cpp-runtime/runtime/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/Henrique-PC/Documents/repos/compilador -BC:/Users/Henrique-PC/Documents/repos/compilador/build --check-stamp-file C:/Users/Henrique-PC/Documents/repos/compilador/build/antlr_runtime_build/runtime/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Users\Henrique-PC\Documents\repos\compilador\build\antlr_runtime_build\runtime\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Building Custom Rule C:/Users/Henrique-PC/antlr4/antlr4-cpp-runtime/runtime/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/Henrique-PC/Documents/repos/compilador -BC:/Users/Henrique-PC/Documents/repos/compilador/build --check-stamp-file C:/Users/Henrique-PC/Documents/repos/compilador/build/antlr_runtime_build/runtime/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Users\Henrique-PC\Documents\repos\compilador\build\antlr_runtime_build\runtime\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\ANTLRErrorListener.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\ANTLRErrorListener.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\ANTLRErrorStrategy.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\ANTLRErrorStrategy.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\ANTLRFileStream.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\ANTLRFileStream.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\ANTLRInputStream.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\ANTLRInputStream.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\BailErrorStrategy.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\BailErrorStrategy.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\BaseErrorListener.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\BaseErrorListener.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\BufferedTokenStream.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\BufferedTokenStream.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\CharStream.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\CharStream.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\CommonToken.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\CommonToken.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\CommonTokenFactory.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\CommonTokenFactory.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\CommonTokenStream.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\CommonTokenStream.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\ConsoleErrorListener.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\ConsoleErrorListener.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\DefaultErrorStrategy.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\DefaultErrorStrategy.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\DiagnosticErrorListener.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\DiagnosticErrorListener.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\Exceptions.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\Exceptions.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\FailedPredicateException.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\FailedPredicateException.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\InputMismatchException.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\InputMismatchException.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\IntStream.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\IntStream.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\InterpreterRuleContext.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\InterpreterRuleContext.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\Lexer.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\Lexer.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\LexerInterpreter.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\LexerInterpreter.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\LexerNoViableAltException.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\LexerNoViableAltException.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\ListTokenSource.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\ListTokenSource.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\NoViableAltException.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\NoViableAltException.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\Parser.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\Parser.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\ParserInterpreter.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\ParserInterpreter.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\ParserRuleContext.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\ParserRuleContext.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\ProxyErrorListener.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\ProxyErrorListener.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\RecognitionException.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\RecognitionException.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\Recognizer.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\Recognizer.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\RuleContext.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\RuleContext.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\RuleContextWithAltNum.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\RuleContextWithAltNum.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\RuntimeMetaData.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\RuntimeMetaData.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\Token.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\Token.h" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\TokenFactory.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\TokenSource.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\TokenSource.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\TokenStream.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\TokenStream.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\TokenStreamRewriter.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\TokenStreamRewriter.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\UnbufferedCharStream.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\UnbufferedCharStream.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\UnbufferedTokenStream.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\UnbufferedTokenStream.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\Vocabulary.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\Vocabulary.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\WritableToken.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\WritableToken.h" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\antlr4-common.h" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\antlr4-runtime.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\ATN.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\ATN.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\ATNConfig.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\ATNConfig.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\ATNConfigSet.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\ATNConfigSet.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\ATNDeserializationOptions.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\ATNDeserializationOptions.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\ATNDeserializer.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\ATNDeserializer.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\ATNSerializer.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\ATNSerializer.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\ATNSimulator.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\ATNSimulator.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\ATNState.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\ATNState.h" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\ATNType.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\AbstractPredicateTransition.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\AbstractPredicateTransition.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\ActionTransition.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\ActionTransition.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\AmbiguityInfo.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\AmbiguityInfo.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\ArrayPredictionContext.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\ArrayPredictionContext.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\AtomTransition.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\AtomTransition.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\BasicBlockStartState.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\BasicBlockStartState.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\BasicState.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\BasicState.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\BlockEndState.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\BlockEndState.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\BlockStartState.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\BlockStartState.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\ContextSensitivityInfo.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\ContextSensitivityInfo.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\DecisionEventInfo.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\DecisionEventInfo.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\DecisionInfo.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\DecisionInfo.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\DecisionState.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\DecisionState.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\EmptyPredictionContext.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\EmptyPredictionContext.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\EpsilonTransition.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\EpsilonTransition.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\ErrorInfo.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\ErrorInfo.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\LL1Analyzer.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\LL1Analyzer.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\LexerATNConfig.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\LexerATNConfig.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\LexerATNSimulator.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\LexerATNSimulator.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\LexerAction.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\LexerAction.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\LexerActionExecutor.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\LexerActionExecutor.h" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\LexerActionType.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\LexerChannelAction.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\LexerChannelAction.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\LexerCustomAction.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\LexerCustomAction.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\LexerIndexedCustomAction.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\LexerIndexedCustomAction.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\LexerModeAction.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\LexerModeAction.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\LexerMoreAction.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\LexerMoreAction.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\LexerPopModeAction.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\LexerPopModeAction.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\LexerPushModeAction.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\LexerPushModeAction.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\LexerSkipAction.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\LexerSkipAction.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\LexerTypeAction.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\LexerTypeAction.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\LookaheadEventInfo.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\LookaheadEventInfo.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\LoopEndState.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\LoopEndState.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\NotSetTransition.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\NotSetTransition.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\OrderedATNConfigSet.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\OrderedATNConfigSet.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\ParseInfo.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\ParseInfo.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\ParserATNSimulator.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\ParserATNSimulator.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\PlusBlockStartState.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\PlusBlockStartState.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\PlusLoopbackState.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\PlusLoopbackState.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\PrecedencePredicateTransition.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\PrecedencePredicateTransition.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\PredicateEvalInfo.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\PredicateEvalInfo.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\PredicateTransition.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\PredicateTransition.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\PredictionContext.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\PredictionContext.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\PredictionMode.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\PredictionMode.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\ProfilingATNSimulator.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\ProfilingATNSimulator.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\RangeTransition.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\RangeTransition.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\RuleStartState.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\RuleStartState.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\RuleStopState.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\RuleStopState.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\RuleTransition.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\RuleTransition.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\SemanticContext.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\SemanticContext.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\SetTransition.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\SetTransition.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\SingletonPredictionContext.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\SingletonPredictionContext.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\StarBlockStartState.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\StarBlockStartState.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\StarLoopEntryState.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\StarLoopEntryState.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\StarLoopbackState.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\StarLoopbackState.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\TokensStartState.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\TokensStartState.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\Transition.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\Transition.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\WildcardTransition.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\atn\WildcardTransition.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\dfa\DFA.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\dfa\DFA.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\dfa\DFASerializer.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\dfa\DFASerializer.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\dfa\DFAState.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\dfa\DFAState.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\dfa\LexerDFASerializer.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\dfa\LexerDFASerializer.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\misc\InterpreterDataReader.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\misc\InterpreterDataReader.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\misc\Interval.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\misc\Interval.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\misc\IntervalSet.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\misc\IntervalSet.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\misc\MurmurHash.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\misc\MurmurHash.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\misc\Predicate.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\misc\Predicate.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\support\Any.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\support\Any.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\support\Arrays.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\support\Arrays.h" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\support\BitSet.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\support\CPPUtils.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\support\CPPUtils.h" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\support\Declarations.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\support\StringUtils.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\support\StringUtils.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\support\guid.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\support\guid.h" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\tree\AbstractParseTreeVisitor.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\tree\ErrorNode.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\tree\ErrorNode.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\tree\ErrorNodeImpl.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\tree\ErrorNodeImpl.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\tree\IterativeParseTreeWalker.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\tree\IterativeParseTreeWalker.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\tree\ParseTree.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\tree\ParseTree.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\tree\ParseTreeListener.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\tree\ParseTreeListener.h" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\tree\ParseTreeProperty.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\tree\ParseTreeVisitor.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\tree\ParseTreeVisitor.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\tree\ParseTreeWalker.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\tree\ParseTreeWalker.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\tree\TerminalNode.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\tree\TerminalNode.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\tree\TerminalNodeImpl.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\tree\TerminalNodeImpl.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\tree\Trees.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\tree\Trees.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\tree\pattern\Chunk.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\tree\pattern\Chunk.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\tree\pattern\ParseTreeMatch.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\tree\pattern\ParseTreeMatch.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\tree\pattern\ParseTreePattern.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\tree\pattern\ParseTreePattern.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\tree\pattern\ParseTreePatternMatcher.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\tree\pattern\ParseTreePatternMatcher.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\tree\pattern\RuleTagToken.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\tree\pattern\RuleTagToken.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\tree\pattern\TagChunk.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\tree\pattern\TagChunk.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\tree\pattern\TextChunk.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\tree\pattern\TextChunk.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\tree\pattern\TokenTagToken.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\tree\pattern\TokenTagToken.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\tree\xpath\XPath.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\tree\xpath\XPath.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\tree\xpath\XPathElement.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\tree\xpath\XPathElement.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\tree\xpath\XPathLexer.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\tree\xpath\XPathLexer.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\tree\xpath\XPathLexerErrorListener.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\tree\xpath\XPathLexerErrorListener.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\tree\xpath\XPathRuleAnywhereElement.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\tree\xpath\XPathRuleAnywhereElement.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\tree\xpath\XPathRuleElement.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\tree\xpath\XPathRuleElement.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\tree\xpath\XPathTokenAnywhereElement.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\tree\xpath\XPathTokenAnywhereElement.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\tree\xpath\XPathTokenElement.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\tree\xpath\XPathTokenElement.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\tree\xpath\XPathWildcardAnywhereElement.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\tree\xpath\XPathWildcardAnywhereElement.h" />
+    <ClCompile Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\tree\xpath\XPathWildcardElement.cpp" />
+    <ClInclude Include="C:\Users\Henrique-PC\antlr4\antlr4-cpp-runtime\runtime\src\tree\xpath\XPathWildcardElement.h" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="C:\Users\Henrique-PC\Documents\repos\compilador\build\ZERO_CHECK.vcxproj">
+      <Project>{AB288575-20E9-31C0-BD89-FFFEB7829760}</Project>
+      <Name>ZERO_CHECK</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

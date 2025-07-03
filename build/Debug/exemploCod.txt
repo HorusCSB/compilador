@@ -1,0 +1,38 @@
+class Pessoa{
+    int idade;
+    string nome;
+}
+
+int somar(int a, int b) {
+    int r = a + b;
+    return r;
+}
+
+start {
+    float testeFloat = 2.5;
+    string s = "texto";
+    char c = 'a';
+    
+    Pessoa pss = new Pessoa();
+    
+    pss.idade = 25;
+    pss.nome = "Fulano";
+    
+    int resultado = somar(3, 4);
+    printf(resultado);
+    
+
+    int i = 20;
+    while(i < 26){
+    
+        if (x < 25) {
+            printf("ta novo");
+        } else if (x == 25) {
+            printf("acertou");
+        } else {
+            printf("ta veio");
+        }
+        
+        i = i + 1;
+    }
+}

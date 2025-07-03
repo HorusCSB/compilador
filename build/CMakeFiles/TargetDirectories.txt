@@ -1,0 +1,5 @@
+C:/Users/Henrique-PC/Documents/repos/compilador/build/CMakeFiles/trabCompila.dir
+C:/Users/Henrique-PC/Documents/repos/compilador/build/CMakeFiles/ALL_BUILD.dir
+C:/Users/Henrique-PC/Documents/repos/compilador/build/CMakeFiles/ZERO_CHECK.dir
+C:/Users/Henrique-PC/Documents/repos/compilador/build/antlr_runtime_build/CMakeFiles/ALL_BUILD.dir
+C:/Users/Henrique-PC/Documents/repos/compilador/build/antlr_runtime_build/runtime/CMakeFiles/antlr4_cpp_runtime.dir
