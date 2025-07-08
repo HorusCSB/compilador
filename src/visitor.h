@@ -11,18 +11,23 @@ struct Simbolo {
     std::string tipo;
     std::string escopo;
     int linha;
+    bool inicializado = false;
 };
 
 class MeuVisitor : public gramaticaBaseVisitor {
 public:
     std::string escopoAtual = "global";
-    std::unordered_map<std::string, Simbolo> tabela;
+    std::map<std::string, std::map<std::string, Simbolo>> tabelaPorEscopo;
 
-    virtual antlrcpp::Any visitDeclaracaoClasse(gramaticaParser::DeclaracaoClasseContext *ctx) override;
-    virtual antlrcpp::Any visitDeclaracaoFuncao(gramaticaParser::DeclaracaoFuncaoContext *ctx) override;
-    virtual antlrcpp::Any visitDeclaracaoVariavel(gramaticaParser::DeclaracaoVariavelContext *ctx) override;
+    antlrcpp::Any visitDeclaracaoClasse(gramaticaParser::DeclaracaoClasseContext *ctx) override;
+    antlrcpp::Any visitDeclaracaoFuncao(gramaticaParser::DeclaracaoFuncaoContext *ctx) override;
+    antlrcpp::Any visitDeclaracaoVariavel(gramaticaParser::DeclaracaoVariavelContext *ctx) override;
+    antlrcpp::Any visitAtribuicao(gramaticaParser::AtribuicaoContext *ctx) override;
+    antlrcpp::Any visitExpressaoPrimaria(gramaticaParser::ExpressaoPrimariaContext *ctx) override;
 
     void imprimirTabela();
+    bool existeVariavel(const std::string& nome);
+    bool atributoExiste(const std::string& obj, const std::string& atributo);
 };
 
 #endif

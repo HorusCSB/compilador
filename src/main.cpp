@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include <filesystem>
 #include "antlr4-runtime.h"
 #include "../saida/gramaticaLexer.h"
 #include "../saida/gramaticaParser.h"
@@ -9,7 +10,7 @@
 int main(int argc, const char* argv[]) {
     std::ifstream stream("exemploCod.txt");
     if (!stream) {
-        std::cerr << "Erro ao abrir o arquivo exemploCod.txt\n";
+        std::cerr << "Erro ao abrir o arquivo exemploCod.txt\n" << std::filesystem::current_path() << std::endl;;
         return 1;
     }
 
@@ -25,7 +26,7 @@ int main(int argc, const char* argv[]) {
 
     MeuVisitor visitor;
     visitor.visit(tree);
-    visitor.imprimirTabela();
+    //visitor.imprimirTabela();
 
     return 0;
 }
