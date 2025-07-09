@@ -17,6 +17,8 @@ start {
     int a = "banana";
     float f = 3 + 2.5;
     int kkkkkk = 2.5;
+
+    Batata btt = new Batata();
     
     Pessoa pss = new Pessoa();
     

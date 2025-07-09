@@ -1,14 +1,19 @@
 #include "visitor.h"
 
-/*
-TODO:     int resultado = somar(3, 4);
-nao esta entendendo a func somar como um int
-*/
-
 antlrcpp::Any MeuVisitor::visitDeclaracaoClasse(gramaticaParser::DeclaracaoClasseContext *ctx) {
-    escopoAtual = ctx->ID()->getText();
+    std::string nomeClasse = ctx->ID()->getText();
+    int linha = ctx->getStart()->getLine();
+
+    // Adiciona a classe como símbolo no escopo start
+    Simbolo simbClasse{nomeClasse, "classe", "start", linha};
+    tabelaPorEscopo["start"][nomeClasse] = simbClasse;
+
+    // Muda escopo atual para o nome da classe
+    escopoAtual = nomeClasse;
+
     visitChildren(ctx);
-    escopoAtual = "global";
+
+    escopoAtual = "start";
     return nullptr;
 }
 
@@ -17,9 +22,9 @@ antlrcpp::Any MeuVisitor::visitDeclaracaoFuncao(gramaticaParser::DeclaracaoFunca
     std::string tipoRetorno = ctx->tipo()->getText();
     int linha = ctx->getStart()->getLine();
 
-    // adiciona a função na tabela de símbolos (escopo global)
-    Simbolo simboloFuncao{nomeFuncao, tipoRetorno, "global", linha};
-    tabelaPorEscopo["global"][nomeFuncao] = simboloFuncao;
+    // adiciona a função na tabela de símbolos (escopo start)
+    Simbolo simboloFuncao{nomeFuncao, tipoRetorno, "start", linha};
+    tabelaPorEscopo["start"][nomeFuncao] = simboloFuncao;
 
     // muda escopo antes de adicionar parâmetros
     escopoAtual = nomeFuncao;
@@ -39,8 +44,8 @@ antlrcpp::Any MeuVisitor::visitDeclaracaoFuncao(gramaticaParser::DeclaracaoFunca
     // visita corpo da função
     visitChildren(ctx);
 
-    // restaura escopo global
-    escopoAtual = "global";
+    // restaura escopo start
+    escopoAtual = "start";
 
     return nullptr;
 }
@@ -50,17 +55,25 @@ antlrcpp::Any MeuVisitor::visitDeclaracaoVariavel(gramaticaParser::DeclaracaoVar
     std::string tipo = ctx->tipo()->getText();
     int linha = ctx->getStart()->getLine();
 
+    // tipos primitivos permitidos
+    std::set<std::string> tiposPrimitivos = {"int", "float", "char", "string"};
+
+    // verifica se tipo é algum tipo nao existente
+    if (!tiposPrimitivos.count(tipo) && !tabelaPorEscopo["start"].count(tipo)) {
+        std::cout << tipo << "/n";
+        std::cerr << "ERRO: Linha " << linha
+                << ": Tipo '" << tipo << "' nao declarado (classe inexistente?)\n";
+        return nullptr;
+    }
+
     // verifica duplicacao
     if (tabelaPorEscopo[escopoAtual].count(nome)) {
-    std::cerr << "ERRO: Linha " << linha
+        std::cerr << "ERRO: Linha " << linha
               << ": Variavel '" << nome
               << "' ja declarada no escopo '" << escopoAtual << "'.\n";
+        return nullptr;
     } else {
-        // insere primeiro na tabela de simbolos antes de ir pra proxima verificacao
-        Simbolo simb {nome, tipo, escopoAtual, linha};
-        tabelaPorEscopo[escopoAtual][nome] = simb;
-
-        // depois avalia a expressao
+        //avalia a expressao
         if (ctx->expressao()) {
             antlrcpp::Any anyTipo = visit(ctx->expressao());
             std::string tipoExpr = anyTipo.is<std::string>() ? anyTipo.as<std::string>() : "undefined";
@@ -70,8 +83,14 @@ antlrcpp::Any MeuVisitor::visitDeclaracaoVariavel(gramaticaParser::DeclaracaoVar
                         << " Voce nao pode atribuir um tipo '" << tipoExpr
                         << "' a variavel '" << nome
                         << "' de tipo '" << tipo << "'.\n";
+                return nullptr;
             }
         }
+
+        //so adiciona na tabela de simbolos apos passar por todas as verificacoes
+        Simbolo simb {nome, tipo, escopoAtual, linha};
+        tabelaPorEscopo[escopoAtual][nome] = simb;
+
     }
 
     return visitChildren(ctx);
@@ -103,7 +122,7 @@ antlrcpp::Any MeuVisitor::visitAtribuicao(gramaticaParser::AtribuicaoContext *ct
         } else {
             tipoVar = tabelaPorEscopo[escopoAtual].count(acesso)
                         ? tabelaPorEscopo[escopoAtual][acesso].tipo
-                        : tabelaPorEscopo["global"][acesso].tipo;
+                        : tabelaPorEscopo["start"][acesso].tipo;
         }
     }
 
@@ -164,10 +183,10 @@ antlrcpp::Any MeuVisitor::visitExpressaoPrimaria(gramaticaParser::ExpressaoPrima
             return std::string("undefined");
         }
 
-        // Busca o tipo da variável: primeiro no escopo atual, depois no global
+        // Busca o tipo da variável: primeiro no escopo atual, depois no start
         std::string tipoVar = tabelaPorEscopo[escopoAtual].count(nomeVar)
                                 ? tabelaPorEscopo[escopoAtual][nomeVar].tipo
-                                : tabelaPorEscopo["global"][nomeVar].tipo;
+                                : tabelaPorEscopo["start"][nomeVar].tipo;
 
         return tipoVar;
     }
@@ -220,7 +239,7 @@ antlrcpp::Any MeuVisitor::visitExpressaoProduto(gramaticaParser::ExpressaoProdut
 
 //AUXILIARES
 bool MeuVisitor::existeVariavel(const std::string& nome) {
-    return tabelaPorEscopo[escopoAtual].count(nome) || tabelaPorEscopo["global"].count(nome);
+    return tabelaPorEscopo[escopoAtual].count(nome) || tabelaPorEscopo["start"].count(nome);
 }
 
 bool MeuVisitor::atributoExiste(const std::string& obj, const std::string& atributo) {
