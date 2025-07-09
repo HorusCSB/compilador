@@ -13,7 +13,10 @@ start {
     string s = "texto";
     char c = 'a';
 
-    string s = "repetido";
+    string teste = 111;
+    int a = "banana";
+    float f = 3 + 2.5;
+    int kkkkkk = 2.5;
     
     Pessoa pss = new Pessoa();
     
@@ -26,6 +29,7 @@ start {
     
 
     int i = 20;
+    int x = 22;
     while(i < 26){
     
         if (x < 25) {

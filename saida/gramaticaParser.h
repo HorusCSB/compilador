@@ -478,6 +478,7 @@ public:
     antlr4::tree::TerminalNode *NUM_FLOAT();
     antlr4::tree::TerminalNode *STRING();
     antlr4::tree::TerminalNode *CHAR();
+    antlr4::tree::TerminalNode *ID();
     AcessoContext *acesso();
     antlr4::tree::TerminalNode *L_PARENTESE();
     ExpressaoContext *expressao();

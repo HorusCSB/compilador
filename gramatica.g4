@@ -109,6 +109,7 @@ expressaoPrimaria
     | NUM_FLOAT
     | STRING
     | CHAR
+    | ID
     | acesso
     | L_PARENTESE expressao R_PARENTESE
     ;

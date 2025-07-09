@@ -24,6 +24,9 @@ public:
     antlrcpp::Any visitDeclaracaoVariavel(gramaticaParser::DeclaracaoVariavelContext *ctx) override;
     antlrcpp::Any visitAtribuicao(gramaticaParser::AtribuicaoContext *ctx) override;
     antlrcpp::Any visitExpressaoPrimaria(gramaticaParser::ExpressaoPrimariaContext *ctx) override;
+    antlrcpp::Any visitExpressao(gramaticaParser::ExpressaoContext *ctx) override;
+    antlrcpp::Any visitExpressaoSoma(gramaticaParser::ExpressaoSomaContext *ctx) override;
+    antlrcpp::Any visitExpressaoProduto(gramaticaParser::ExpressaoProdutoContext *ctx) override;
 
     void imprimirTabela();
     bool existeVariavel(const std::string& nome);
