@@ -1,6 +1,6 @@
 #include "visitor.h"
 
-antlrcpp::Any MeuVisitor::visitDeclaracaoClasse(gramaticaParser::DeclaracaoClasseContext *ctx) {
+antlrcpp::Any Visitor::visitDeclaracaoClasse(gramaticaParser::DeclaracaoClasseContext *ctx) {
     std::string nomeClasse = ctx->ID()->getText();
     int linha = ctx->getStart()->getLine();
 
@@ -17,7 +17,7 @@ antlrcpp::Any MeuVisitor::visitDeclaracaoClasse(gramaticaParser::DeclaracaoClass
     return nullptr;
 }
 
-antlrcpp::Any MeuVisitor::visitDeclaracaoFuncao(gramaticaParser::DeclaracaoFuncaoContext *ctx) {
+antlrcpp::Any Visitor::visitDeclaracaoFuncao(gramaticaParser::DeclaracaoFuncaoContext *ctx) {
     std::string nomeFuncao = ctx->ID()->getText();
     std::string tipoRetorno = ctx->tipo()->getText();
     int linha = ctx->getStart()->getLine();
@@ -50,7 +50,7 @@ antlrcpp::Any MeuVisitor::visitDeclaracaoFuncao(gramaticaParser::DeclaracaoFunca
     return nullptr;
 }
 
-antlrcpp::Any MeuVisitor::visitDeclaracaoVariavel(gramaticaParser::DeclaracaoVariavelContext *ctx) {
+antlrcpp::Any Visitor::visitDeclaracaoVariavel(gramaticaParser::DeclaracaoVariavelContext *ctx) {
     std::string nome = ctx->ID()->getText();
     std::string tipo = ctx->tipo()->getText();
     int linha = ctx->getStart()->getLine();
@@ -60,7 +60,6 @@ antlrcpp::Any MeuVisitor::visitDeclaracaoVariavel(gramaticaParser::DeclaracaoVar
 
     // verifica se tipo é algum tipo nao existente
     if (!tiposPrimitivos.count(tipo) && !tabelaPorEscopo["start"].count(tipo)) {
-        std::cout << tipo << "/n";
         std::cerr << "ERRO: Linha " << linha
                 << ": Tipo '" << tipo << "' nao declarado (classe inexistente?)\n";
         return nullptr;
@@ -96,7 +95,7 @@ antlrcpp::Any MeuVisitor::visitDeclaracaoVariavel(gramaticaParser::DeclaracaoVar
     return visitChildren(ctx);
 }
 
-antlrcpp::Any MeuVisitor::visitAtribuicao(gramaticaParser::AtribuicaoContext *ctx) {
+antlrcpp::Any Visitor::visitAtribuicao(gramaticaParser::AtribuicaoContext *ctx) {
     std::string acesso = ctx->acesso()->getText();
     int linha = ctx->getStart()->getLine();
     std::string tipoVar;
@@ -140,11 +139,11 @@ antlrcpp::Any MeuVisitor::visitAtribuicao(gramaticaParser::AtribuicaoContext *ct
     return nullptr;
 }
 
-antlrcpp::Any MeuVisitor::visitExpressao(gramaticaParser::ExpressaoContext *ctx) {
+antlrcpp::Any Visitor::visitExpressao(gramaticaParser::ExpressaoContext *ctx) {
     return visit(ctx->expressaoSoma());
 }
 
-antlrcpp::Any MeuVisitor::visitExpressaoPrimaria(gramaticaParser::ExpressaoPrimariaContext *ctx) {
+antlrcpp::Any Visitor::visitExpressaoPrimaria(gramaticaParser::ExpressaoPrimariaContext *ctx) {
     if (ctx->NUM_INT()) {
         return std::string("int");
     }
@@ -195,7 +194,7 @@ antlrcpp::Any MeuVisitor::visitExpressaoPrimaria(gramaticaParser::ExpressaoPrima
 }
 
 
-antlrcpp::Any MeuVisitor::visitExpressaoSoma(gramaticaParser::ExpressaoSomaContext *ctx) {
+antlrcpp::Any Visitor::visitExpressaoSoma(gramaticaParser::ExpressaoSomaContext *ctx) {
     antlrcpp::Any anyTipoEsq = visit(ctx->expressaoProduto(0));
     std::string tipoEsquerda = anyTipoEsq.is<std::string>() ? anyTipoEsq.as<std::string>() : "undefined";
 
@@ -217,7 +216,7 @@ antlrcpp::Any MeuVisitor::visitExpressaoSoma(gramaticaParser::ExpressaoSomaConte
     return tipoEsquerda;
 }
 
-antlrcpp::Any MeuVisitor::visitExpressaoProduto(gramaticaParser::ExpressaoProdutoContext *ctx) {
+antlrcpp::Any Visitor::visitExpressaoProduto(gramaticaParser::ExpressaoProdutoContext *ctx) {
     antlrcpp::Any anyTipoEsq = visit(ctx->expressaoPrimaria(0));
     std::string tipoEsquerda = anyTipoEsq.is<std::string>() ? anyTipoEsq.as<std::string>() : "undefined";
 
@@ -238,17 +237,17 @@ antlrcpp::Any MeuVisitor::visitExpressaoProduto(gramaticaParser::ExpressaoProdut
 
 
 //AUXILIARES
-bool MeuVisitor::existeVariavel(const std::string& nome) {
+bool Visitor::existeVariavel(const std::string& nome) {
     return tabelaPorEscopo[escopoAtual].count(nome) || tabelaPorEscopo["start"].count(nome);
 }
 
-bool MeuVisitor::atributoExiste(const std::string& obj, const std::string& atributo) {
+bool Visitor::atributoExiste(const std::string& obj, const std::string& atributo) {
     if (!existeVariavel(obj)) return false;
     std::string tipo = tabelaPorEscopo[escopoAtual][obj].tipo;
     return tabelaPorEscopo[tipo].count(atributo);
 }
 
-void MeuVisitor::imprimirTabela() {
+void Visitor::imprimirTabela() {
     std::cout << "\nTabela de Simbolos:\n";
     for (const auto& [escopo, simbolos] : tabelaPorEscopo) {
         for (const auto& [nome, simb] : simbolos) {

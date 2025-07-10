@@ -14,7 +14,7 @@ struct Simbolo {
     bool inicializado = false;
 };
 
-class MeuVisitor : public gramaticaBaseVisitor {
+class Visitor : public gramaticaBaseVisitor {
 public:
     std::string escopoAtual = "global";
     std::map<std::string, std::map<std::string, Simbolo>> tabelaPorEscopo;

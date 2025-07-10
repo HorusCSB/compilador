@@ -15,6 +15,7 @@ start {
 
     string teste = 111;
     int a = "banana";
+    int b = 3;
     float f = 3 + 2.5;
     int kkkkkk = 2.5;
 
@@ -24,6 +25,8 @@ start {
     
     pss.idade = 25;
     pss.nome = "Fulano";
+
+    pss.teste = "uai";
 
     
     int resultado = somar(3, 4);

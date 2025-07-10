@@ -6,6 +6,7 @@
 #include "../saida/gramaticaLexer.h"
 #include "../saida/gramaticaParser.h"
 #include "visitor.h"
+#include "listener.h"
 
 int main(int argc, const char* argv[]) {
     try{
@@ -23,11 +24,18 @@ int main(int argc, const char* argv[]) {
         antlr4::CommonTokenStream tokens(&lexer);
         gramaticaParser parser(&tokens);
 
+        lexer.removeErrorListeners();
+        parser.removeErrorListeners();
+
+        Listener* listener = new Listener();
+        lexer.addErrorListener(listener);
+        parser.addErrorListener(listener);
+
         antlr4::tree::ParseTree *tree = parser.programa();
 
-        MeuVisitor visitor;
+        Visitor visitor;
         visitor.visit(tree);
-        visitor.imprimirTabela();
+        //visitor.imprimirTabela();
     } catch (const std::exception& e) {
         std::cerr << "Excecao capturada: " << e.what() << std::endl;
     } catch (...) {

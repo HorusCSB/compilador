@@ -19,6 +19,9 @@
     <ClCompile Include="C:\Users\Henrique-PC\Documents\repos\compilador\saida\gramaticaVisitor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="C:\Users\Henrique-PC\Documents\repos\compilador\src\listener.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="C:\Users\Henrique-PC\Documents\repos\compilador\src\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
