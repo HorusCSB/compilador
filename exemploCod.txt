@@ -13,20 +13,20 @@ start {
     string s = "texto";
     char c = 'a';
 
-    string teste = 111;
-    int a = "banana";
+    //string teste = 111;
+    //int a = "banana";
     int b = 3;
     float f = 3 + 2.5;
-    int kkkkkk = 2.5;
+    //int kkkkkk = 2.5;
 
-    Batata btt = new Batata();
+    //Batata btt = new Batata();
     
     Pessoa pss = new Pessoa();
+    //pss.teste = "uai";
     
     pss.idade = 25;
     pss.nome = "Fulano";
 
-    pss.teste = "uai";
 
     
     int resultado = somar(3, 4);

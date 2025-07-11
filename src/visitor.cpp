@@ -21,6 +21,8 @@ antlrcpp::Any Visitor::visitDeclaracaoFuncao(gramaticaParser::DeclaracaoFuncaoCo
     std::string nomeFuncao = ctx->ID()->getText();
     std::string tipoRetorno = ctx->tipo()->getText();
     int linha = ctx->getStart()->getLine();
+    escopoAtual = nomeFuncao;
+    tipoFuncaoAtual = tipoRetorno;
 
     // adiciona a função na tabela de símbolos (escopo start)
     Simbolo simboloFuncao{nomeFuncao, tipoRetorno, "start", linha};
@@ -41,11 +43,19 @@ antlrcpp::Any Visitor::visitDeclaracaoFuncao(gramaticaParser::DeclaracaoFuncaoCo
         }
     }
 
+    // adiciona parâmetros ao mapa
+    for (auto param : ctx->parametros()->parametro()) {
+        std::string nomeParam = param->ID()->getText();
+        std::string tipoParam = param->tipo()->getText();
+        parametrosFuncao[nomeFuncao].push_back(tipoParam);
+    }
+
     // visita corpo da função
     visitChildren(ctx);
 
     // restaura escopo start
     escopoAtual = "start";
+    tipoFuncaoAtual = "";
 
     return nullptr;
 }
@@ -60,14 +70,14 @@ antlrcpp::Any Visitor::visitDeclaracaoVariavel(gramaticaParser::DeclaracaoVariav
 
     // verifica se tipo é algum tipo nao existente
     if (!tiposPrimitivos.count(tipo) && !tabelaPorEscopo["start"].count(tipo)) {
-        std::cerr << "ERRO: Linha " << linha
+        std::cerr << "Linha " << linha
                 << ": Tipo '" << tipo << "' nao declarado (classe inexistente?)\n";
         return nullptr;
     }
 
     // verifica duplicacao
     if (tabelaPorEscopo[escopoAtual].count(nome)) {
-        std::cerr << "ERRO: Linha " << linha
+        std::cerr << "Linha " << linha
               << ": Variavel '" << nome
               << "' ja declarada no escopo '" << escopoAtual << "'.\n";
         return nullptr;
@@ -78,7 +88,7 @@ antlrcpp::Any Visitor::visitDeclaracaoVariavel(gramaticaParser::DeclaracaoVariav
             std::string tipoExpr = anyTipo.is<std::string>() ? anyTipo.as<std::string>() : "undefined";
 
             if (tipoExpr != "undefined" && tipo != tipoExpr) {
-                std::cerr << "ERRO: Linha " << linha
+                std::cerr << "Linha " << linha
                         << " Voce nao pode atribuir um tipo '" << tipoExpr
                         << "' a variavel '" << nome
                         << "' de tipo '" << tipo << "'.\n";
@@ -106,7 +116,7 @@ antlrcpp::Any Visitor::visitAtribuicao(gramaticaParser::AtribuicaoContext *ctx) 
         std::string atributo = acesso.substr(ponto+1);
 
         if (!atributoExiste(obj, atributo)) {
-            std::cerr << "ERRO: Linha " << linha
+            std::cerr << "Linha " << linha
                       << ": Atributo '" << atributo
                       << "' nao pertence ao objeto '" << obj << "'.\n";
         } else {
@@ -115,7 +125,7 @@ antlrcpp::Any Visitor::visitAtribuicao(gramaticaParser::AtribuicaoContext *ctx) 
         }
     } else {
         if (!existeVariavel(acesso)) {
-            std::cerr << "ERRO: Linha " << linha
+            std::cerr << "Linha " << linha
                       << ": Variavel '" << acesso
                       << "' usada sem estar declarada.\n";
         } else {
@@ -130,7 +140,7 @@ antlrcpp::Any Visitor::visitAtribuicao(gramaticaParser::AtribuicaoContext *ctx) 
     std::string tipoExpr = anyTipo.is<std::string>() ? anyTipo.as<std::string>() : "undefined";
 
     if (!tipoVar.empty() && tipoVar != tipoExpr && tipoExpr != "undefined") {
-        std::cerr << "ERRO: Linha " << linha
+        std::cerr << "Linha " << linha
                   << "Voce nao pode atribuir um tipo '" << tipoExpr
                   << "' a variavel '" << acesso
                   << "' de tipo '" << tipoVar << "'.\n";
@@ -160,9 +170,9 @@ antlrcpp::Any Visitor::visitExpressaoPrimaria(gramaticaParser::ExpressaoPrimaria
         return std::string("char");
     }
 
-    if (ctx->chamadaFuncao()) {
-        return visit(ctx->chamadaFuncao());
-    }
+     if (ctx->chamadaFuncao()) {
+         return visit(ctx->chamadaFuncao());
+     }
 
     if (ctx->acesso()) {
         return visit(ctx->acesso());
@@ -177,7 +187,7 @@ antlrcpp::Any Visitor::visitExpressaoPrimaria(gramaticaParser::ExpressaoPrimaria
         int linha = ctx->getStart()->getLine();
 
         if (!existeVariavel(nomeVar)) {
-            std::cerr << "ERRO: Linha " << linha
+            std::cerr << "Linha " << linha
                     << ": Variavel '" << nomeVar << "' nao foi declarada." << std::endl;
             return std::string("undefined");
         }
@@ -235,8 +245,57 @@ antlrcpp::Any Visitor::visitExpressaoProduto(gramaticaParser::ExpressaoProdutoCo
     return tipoEsquerda;
 }
 
+antlrcpp::Any Visitor::visitChamadaFuncao(gramaticaParser::ChamadaFuncaoContext *ctx) {
+    std::string nomeFuncao = ctx->ID()->getText();
+    int linha = ctx->getStart()->getLine();
 
-//AUXILIARES
+    auto chave = std::make_pair(nomeFuncao, linha);
+    // se já foi analisada essa chamada, evita repetir
+    if (chamadasJaAnalisadas.count(chave)) {
+        return tabelaPorEscopo["start"][nomeFuncao].tipo;
+    }
+
+    chamadasJaAnalisadas.insert(chave);
+
+    // Verifica se a função foi declarada
+    if (!tabelaPorEscopo["start"].count(nomeFuncao)) {
+        std::cerr << "Linha " << linha
+                  << ": Funcao '" << nomeFuncao
+                  << "' chamada mas nao foi declarada.\n";
+        return std::string("undefined");
+    }
+
+    // Verifica número de argumentos (se existirem)
+    
+    int qtdPassados = ctx->argumentos() ? ctx->argumentos()->expressao().size() : 0;
+    int qtdEsperado = parametrosFuncao.count(nomeFuncao) ? parametrosFuncao[nomeFuncao].size() : 0;
+
+    if (qtdPassados != qtdEsperado) {
+        std::cerr << "Linha " << linha
+                  << ": Funcao '" << nomeFuncao
+                  << "' esperava " << qtdEsperado
+                  << " argumentos, mas recebeu " << qtdPassados << ".\n";
+    }
+
+    return tabelaPorEscopo["start"][nomeFuncao].tipo;
+}
+
+antlrcpp::Any Visitor::visitComandoRetorno(gramaticaParser::ComandoRetornoContext *ctx) {
+    int linha = ctx->getStart()->getLine();
+    antlrcpp::Any anyTipo = visit(ctx->expressao());
+    std::string tipoExpr = anyTipo.is<std::string>() ? anyTipo.as<std::string>() : "undefined";
+
+    if (!tipoFuncaoAtual.empty() && tipoExpr != "undefined" && tipoExpr != tipoFuncaoAtual) {
+        std::cerr << "Linha " << linha
+                  << ": Retorno de tipo '" << tipoExpr
+                  << "' nao compativel com tipo declarado da funcao ('"
+                  << tipoFuncaoAtual << "').\n";
+    }
+
+    return nullptr;
+}
+
+//---------------------------------AUXILIARES------------------------------------------------
 bool Visitor::existeVariavel(const std::string& nome) {
     return tabelaPorEscopo[escopoAtual].count(nome) || tabelaPorEscopo["start"].count(nome);
 }

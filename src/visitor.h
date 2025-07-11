@@ -3,6 +3,7 @@
 
 #include "../saida/gramaticaBaseVisitor.h"
 #include <unordered_map>
+#include <vector>
 #include <string>
 #include <iostream>
 
@@ -18,6 +19,8 @@ class Visitor : public gramaticaBaseVisitor {
 public:
     std::string escopoAtual = "global";
     std::map<std::string, std::map<std::string, Simbolo>> tabelaPorEscopo;
+    std::unordered_map<std::string, std::vector<std::string>> parametrosFuncao;
+    std::string tipoFuncaoAtual;
 
     antlrcpp::Any visitDeclaracaoClasse(gramaticaParser::DeclaracaoClasseContext *ctx) override;
     antlrcpp::Any visitDeclaracaoFuncao(gramaticaParser::DeclaracaoFuncaoContext *ctx) override;
@@ -27,10 +30,15 @@ public:
     antlrcpp::Any visitExpressao(gramaticaParser::ExpressaoContext *ctx) override;
     antlrcpp::Any visitExpressaoSoma(gramaticaParser::ExpressaoSomaContext *ctx) override;
     antlrcpp::Any visitExpressaoProduto(gramaticaParser::ExpressaoProdutoContext *ctx) override;
+    antlrcpp::Any visitChamadaFuncao(gramaticaParser::ChamadaFuncaoContext *ctx) override;
+    antlrcpp::Any visitComandoRetorno(gramaticaParser::ComandoRetornoContext *ctx) override;
 
     void imprimirTabela();
     bool existeVariavel(const std::string& nome);
     bool atributoExiste(const std::string& obj, const std::string& atributo);
+
+private:
+    std::set<std::pair<std::string, int>> chamadasJaAnalisadas;
 };
 
 #endif
