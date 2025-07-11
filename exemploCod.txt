@@ -5,6 +5,8 @@ class Pessoa{
 
 int somar(int a, int b) {
     int r = a + b;
+
+    return r;
 }
 
 start {
@@ -13,7 +15,7 @@ start {
     //string teste = 111;
     //int a = "banana";
     //int kkkkkk = 2.5;
-    int b = 3;
+    int b = 2;
 
     //Batata btt = new Batata();
     
@@ -23,7 +25,7 @@ start {
     pss.idade = 25;
     pss.nome = "Fulano";
     
-    int resultado = somar(3, 4);
+    int resultado = somar(3, x);
     printf(resultado);
     
 
