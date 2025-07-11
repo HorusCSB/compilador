@@ -5,19 +5,15 @@ class Pessoa{
 
 int somar(int a, int b) {
     int r = a + b;
-    return r;
 }
 
 start {
-    float testeFloat = 2.5;
-    string s = "texto";
     char c = 'a';
 
     //string teste = 111;
     //int a = "banana";
-    int b = 3;
-    float f = 3 + 2.5;
     //int kkkkkk = 2.5;
+    int b = 3;
 
     //Batata btt = new Batata();
     
@@ -26,8 +22,6 @@ start {
     
     pss.idade = 25;
     pss.nome = "Fulano";
-
-
     
     int resultado = somar(3, 4);
     printf(resultado);

@@ -32,6 +32,7 @@ public:
     antlrcpp::Any visitExpressaoProduto(gramaticaParser::ExpressaoProdutoContext *ctx) override;
     antlrcpp::Any visitChamadaFuncao(gramaticaParser::ChamadaFuncaoContext *ctx) override;
     antlrcpp::Any visitComandoRetorno(gramaticaParser::ComandoRetornoContext *ctx) override;
+    antlrcpp::Any visitAcesso(gramaticaParser::AcessoContext *ctx) override;
 
     void imprimirTabela();
     bool existeVariavel(const std::string& nome);

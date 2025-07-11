@@ -63,7 +63,7 @@ antlrcpp::Any Visitor::visitDeclaracaoFuncao(gramaticaParser::DeclaracaoFuncaoCo
 antlrcpp::Any Visitor::visitDeclaracaoVariavel(gramaticaParser::DeclaracaoVariavelContext *ctx) {
     std::string nome = ctx->ID()->getText();
     std::string tipo = ctx->tipo()->getText();
-    int linha = ctx->getStart()->getLine();
+    int linha = ctx->getStart()->getLine(); 
 
     // tipos primitivos permitidos
     std::set<std::string> tiposPrimitivos = {"int", "float", "char", "string"};
@@ -294,6 +294,40 @@ antlrcpp::Any Visitor::visitComandoRetorno(gramaticaParser::ComandoRetornoContex
 
     return nullptr;
 }
+
+antlrcpp::Any Visitor::visitAcesso(gramaticaParser::AcessoContext *ctx) {
+    std::string obj = ctx->ID(0)->getText();
+    int linha = ctx->getStart()->getLine();
+
+    // acesso simples (sem ponto)
+    if (ctx->ID().size() == 1) {
+        if (!existeVariavel(obj)) {
+            std::cerr << "Linha " << linha << ": Variavel '" << obj << "' nao foi declarada.\n";
+            return std::string("undefined");
+        }
+
+        return tabelaPorEscopo[escopoAtual].count(obj)
+                ? tabelaPorEscopo[escopoAtual][obj].tipo
+                : tabelaPorEscopo["start"][obj].tipo;
+    }
+
+    // Acesso com ponto: obj.atributo
+    std::string atributo = ctx->ID(1)->getText();
+
+    if (!atributoExiste(obj, atributo)) {
+        std::cerr << "Linha " << linha << ": Atributo '" << atributo
+                  << "' nao pertence ao objeto '" << obj << "'.\n";
+        return std::string("undefined");
+    }
+
+    // Retorna o tipo do atributo
+    std::string tipoClasse = tabelaPorEscopo[escopoAtual].count(obj)
+                             ? tabelaPorEscopo[escopoAtual][obj].tipo
+                             : tabelaPorEscopo["start"][obj].tipo;
+
+    return tabelaPorEscopo[tipoClasse][atributo].tipo;
+}
+
 
 //---------------------------------AUXILIARES------------------------------------------------
 bool Visitor::existeVariavel(const std::string& nome) {
