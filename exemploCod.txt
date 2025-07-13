@@ -25,7 +25,7 @@ start {
     pss.idade = 25;
     pss.nome = "Fulano";
     
-    int resultado = somar(3, x);
+    int resultado = somar(3, 5);
     printf(resultado);
     
 

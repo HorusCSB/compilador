@@ -35,7 +35,7 @@ int main(int argc, const char* argv[]) {
 
         Visitor visitor;
         visitor.visit(tree);
-        //visitor.imprimirTabela();
+        visitor.imprimirTabela();
     } catch (const std::exception& e) {
         std::cerr << "Excecao capturada: " << e.what() << std::endl;
     } catch (...) {

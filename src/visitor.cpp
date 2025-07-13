@@ -38,7 +38,7 @@ antlrcpp::Any Visitor::visitDeclaracaoFuncao(gramaticaParser::DeclaracaoFuncaoCo
             std::string tipoParam = param->tipo()->getText();
             int linhaParam = param->getStart()->getLine();
 
-            Simbolo simboloParam {nomeParam, tipoParam, escopoAtual, linhaParam};
+            Simbolo simboloParam {nomeParam, tipoParam, escopoAtual, linhaParam, true};
             tabelaPorEscopo[escopoAtual][nomeParam] = simboloParam;
         }
     }
@@ -54,6 +54,7 @@ antlrcpp::Any Visitor::visitDeclaracaoFuncao(gramaticaParser::DeclaracaoFuncaoCo
     visitChildren(ctx);
 
     // restaura escopo start
+    funcoesDeclaradas[nomeFuncao] = ctx;
     escopoAtual = "start";
     tipoFuncaoAtual = "";
 
@@ -63,47 +64,50 @@ antlrcpp::Any Visitor::visitDeclaracaoFuncao(gramaticaParser::DeclaracaoFuncaoCo
 antlrcpp::Any Visitor::visitDeclaracaoVariavel(gramaticaParser::DeclaracaoVariavelContext *ctx) {
     std::string nome = ctx->ID()->getText();
     std::string tipo = ctx->tipo()->getText();
-    int linha = ctx->getStart()->getLine(); 
+    int linha = ctx->getStart()->getLine();
 
-    // tipos primitivos permitidos
     std::set<std::string> tiposPrimitivos = {"int", "float", "char", "string"};
 
-    // verifica se tipo é algum tipo nao existente
+    // Verifica se o tipo é válido (primitivo ou classe declarada)
     if (!tiposPrimitivos.count(tipo) && !tabelaPorEscopo["start"].count(tipo)) {
         std::cerr << "ERRO: Linha " << linha
-                << ": Tipo '" << tipo << "' nao declarado (classe inexistente?)\n";
+                  << ": Tipo '" << tipo << "' nao declarado (classe inexistente?)\n";
         return nullptr;
     }
 
-    // verifica duplicacao
+    // Verifica duplicação
     if (tabelaPorEscopo[escopoAtual].count(nome)) {
         std::cerr << "ERRO: Linha " << linha
-              << ": Variavel '" << nome
-              << "' ja declarada no escopo '" << escopoAtual << "'.\n";
+                  << ": Variavel '" << nome
+                  << "' ja declarada no escopo '" << escopoAtual << "'.\n";
         return nullptr;
-    } else {
-        //avalia a expressao
-        if (ctx->expressao()) {
-            antlrcpp::Any anyTipo = visit(ctx->expressao());
-            std::string tipoExpr = anyTipo.is<std::string>() ? anyTipo.as<std::string>() : "undefined";
+    }
 
-            if (tipoExpr != "undefined" && tipo != tipoExpr) {
-                std::cerr << "ERRO: Linha " << linha
-                        << ": Voce nao pode atribuir um tipo '" << tipoExpr
-                        << "' a variavel '" << nome
-                        << "' de tipo '" << tipo << "'.\n";
-                return nullptr;
-            }
+    // Avalia a expressão (se houver)
+    Simbolo simb {nome, tipo, escopoAtual, linha, false, ""};
+
+    if (ctx->expressao()) {
+        ResultadoExpr resultado = visit(ctx->expressao()).as<ResultadoExpr>();
+
+        if (resultado.tipo != "undefined" && resultado.tipo != tipo) {
+            std::cerr << "ERRO: Linha " << linha
+                    << ": Voce nao pode atribuir um tipo '" << resultado.tipo
+                    << "' a variavel '" << nome
+                    << "' de tipo '" << tipo << "'.\n";
+            return nullptr;
         }
 
-        //so adiciona na tabela de simbolos apos passar por todas as verificacoes
-        Simbolo simb {nome, tipo, escopoAtual, linha};
-        tabelaPorEscopo[escopoAtual][nome] = simb;
+        simb.inicializado = true;
+        simb.valor = resultado.valor;
+        //std::cout << "DEBUG: Resultado da expressao atribuida a '" << nome << "' = " << resultado.tipo << " " << resultado.valor << "\n";
 
     }
 
+    // Adiciona símbolo à tabela
+    tabelaPorEscopo[escopoAtual][nome] = simb;
     return nullptr;
 }
+
 
 antlrcpp::Any Visitor::visitAtribuicao(gramaticaParser::AtribuicaoContext *ctx) {
     std::string acesso = ctx->acesso()->getText();
@@ -150,36 +154,30 @@ antlrcpp::Any Visitor::visitAtribuicao(gramaticaParser::AtribuicaoContext *ctx) 
 }
 
 antlrcpp::Any Visitor::visitExpressao(gramaticaParser::ExpressaoContext *ctx) {
-    return visit(ctx->expressaoSoma());
+    return visit(ctx->expressaoSoma()).as<ResultadoExpr>();
 }
 
 antlrcpp::Any Visitor::visitExpressaoPrimaria(gramaticaParser::ExpressaoPrimariaContext *ctx) {
     if (ctx->NUM_INT()) {
-        return std::string("int");
+        return ResultadoExpr("int", ctx->getText());
     }
 
     if (ctx->NUM_FLOAT()) {
-        return std::string("float");
+        return ResultadoExpr("float", ctx->getText());
     }
 
     if (ctx->STRING()) {
-        return std::string("string");
+        std::string raw = ctx->getText();
+        return ResultadoExpr("string", raw.substr(1, raw.size() - 2));
     }
 
     if (ctx->CHAR()) {
-        return std::string("char");
+        std::string raw = ctx->getText();
+        return ResultadoExpr("char", raw.substr(1, raw.size() - 2));
     }
 
-     if (ctx->chamadaFuncao()) {
-         return visit(ctx->chamadaFuncao());
-     }
-
-    if (ctx->acesso()) {
-        return visit(ctx->acesso());
-    }
-
-    if (ctx->expressao()) {
-        return visit(ctx->expressao());
+    if (ctx->chamadaFuncao()) {
+        return visit(ctx->chamadaFuncao()).as<ResultadoExpr>();
     }
 
     if (ctx->ID()) {
@@ -189,117 +187,200 @@ antlrcpp::Any Visitor::visitExpressaoPrimaria(gramaticaParser::ExpressaoPrimaria
         if (!existeVariavel(nomeVar)) {
             std::cerr << "ERRO: Linha " << linha
                     << ": Variavel '" << nomeVar << "' nao foi declarada." << std::endl;
-            return std::string("undefined");
+            return ResultadoExpr("undefined", "");
         }
 
-        // Busca o tipo da variável: primeiro no escopo atual, depois no start
-        std::string tipoVar = tabelaPorEscopo[escopoAtual].count(nomeVar)
-                                ? tabelaPorEscopo[escopoAtual][nomeVar].tipo
-                                : tabelaPorEscopo["start"][nomeVar].tipo;
+        Simbolo simb = tabelaPorEscopo[escopoAtual].count(nomeVar)
+                    ? tabelaPorEscopo[escopoAtual][nomeVar]
+                    : tabelaPorEscopo["start"][nomeVar];
 
-        return tipoVar;
+        if (!simb.inicializado) {
+            std::cerr << "ERRO: Linha " << linha
+                    << ": Variavel '" << nomeVar << "' usada sem estar inicializada." << std::endl;
+            return ResultadoExpr(simb.tipo, "");
+        }
+
+        return ResultadoExpr(simb.tipo, simb.valor);
     }
 
-    return std::string("undefined");
+
+    if (ctx->expressao()) {
+        return visit(ctx->expressao()).as<ResultadoExpr>();
+    }
+
+    return ResultadoExpr();
 }
 
-
 antlrcpp::Any Visitor::visitExpressaoSoma(gramaticaParser::ExpressaoSomaContext *ctx) {
-    antlrcpp::Any anyTipoEsq = visit(ctx->expressaoProduto(0));
-    std::string tipoEsquerda = anyTipoEsq.is<std::string>() ? anyTipoEsq.as<std::string>() : "undefined";
+    ResultadoExpr resultado = visit(ctx->expressaoProduto(0)).as<ResultadoExpr>();
 
     for (size_t i = 1; i < ctx->expressaoProduto().size(); ++i) {
-        //std::string tipoDireita = visit(ctx->expressaoProduto(i));
-        antlrcpp::Any anyTipoDir = visit(ctx->expressaoProduto(i));
-        std::string tipoDireita = anyTipoDir.is<std::string>() ? anyTipoDir.as<std::string>() : "undefined";
+        std::string op;
+        if (ctx->SOMA(i - 1)) op = "+";
+        else if (ctx->SUBTRACAO(i - 1)) op = "-";
+        else op = "?";
 
+        ResultadoExpr direito = visit(ctx->expressaoProduto(i)).as<ResultadoExpr>();
 
-        if (tipoEsquerda == "int" && tipoDireita == "float" ||
-            tipoEsquerda == "float" && tipoDireita == "int" ||
-            tipoEsquerda == "float" && tipoDireita == "float") {
-            tipoEsquerda = "float"; // promoção
-        } else if (tipoEsquerda != tipoDireita) {
-            tipoEsquerda = "undefined"; // erro de tipo
+        if ((resultado.tipo == "int" || resultado.tipo == "float") &&
+            (direito.tipo == "int" || direito.tipo == "float")) {
+
+            std::string tipoResultado = (resultado.tipo == "float" || direito.tipo == "float") ? "float" : "int";
+
+            if (!ehNumero(resultado.valor) || !ehNumero(direito.valor)) {
+                resultado.tipo = "undefined";
+                resultado.valor = "";
+                break;
+            }
+
+            double valEsq = std::stod(resultado.valor);
+            double valDir = std::stod(direito.valor);
+            double valFinal;
+
+            if (op == "+") valFinal = valEsq + valDir;
+            else if (op == "-") valFinal = valEsq - valDir;
+            else valFinal = 0;  // Operador inválido
+
+            resultado.tipo = tipoResultado;
+            if (tipoResultado == "int")
+                resultado.valor = std::to_string(static_cast<int>(valFinal));
+            else
+                resultado.valor = std::to_string(valFinal);
+        } else {
+            resultado.tipo = "undefined";
+            resultado.valor = "";
+            break;
         }
     }
 
-    return tipoEsquerda;
+    return resultado;
 }
 
 antlrcpp::Any Visitor::visitExpressaoProduto(gramaticaParser::ExpressaoProdutoContext *ctx) {
-    antlrcpp::Any anyTipoEsq = visit(ctx->expressaoPrimaria(0));
-    std::string tipoEsquerda = anyTipoEsq.is<std::string>() ? anyTipoEsq.as<std::string>() : "undefined";
+    ResultadoExpr resultado = visit(ctx->expressaoPrimaria(0)).as<ResultadoExpr>();
 
     for (size_t i = 1; i < ctx->expressaoPrimaria().size(); ++i) {
-        antlrcpp::Any anyTipoDir = visit(ctx->expressaoPrimaria(i));
-        std::string tipoDireita = anyTipoDir.is<std::string>() ? anyTipoDir.as<std::string>() : "undefined";
-        if (tipoEsquerda == "int" && tipoDireita == "float" ||
-            tipoEsquerda == "float" && tipoDireita == "int" ||
-            tipoEsquerda == "float" && tipoDireita == "float") {
-            tipoEsquerda = "float";
-        } else if (tipoEsquerda != tipoDireita) {
-            tipoEsquerda = "undefined";
+        std::string op = ctx->MULTIPLICACAO(i - 1) ? "*" : "/";
+        ResultadoExpr direito = visit(ctx->expressaoPrimaria(i)).as<ResultadoExpr>();
+
+        if ((resultado.tipo == "int" || resultado.tipo == "float") &&
+            (direito.tipo == "int" || direito.tipo == "float")) {
+
+            std::string tipoResultado = (resultado.tipo == "float" || direito.tipo == "float") ? "float" : "int";
+
+            double valEsq = std::stod(resultado.valor);
+            double valDir = std::stod(direito.valor);
+            double valFinal = op == "*" ? valEsq * valDir : valEsq / valDir;
+
+            resultado.tipo = tipoResultado;
+            if (tipoResultado == "int")
+                resultado.valor = std::to_string(static_cast<int>(valFinal));
+            else
+                resultado.valor = std::to_string(valFinal);
+        } else {
+            resultado.tipo = "undefined";
+            resultado.valor = "";
+            break;
         }
     }
 
-    return tipoEsquerda;
+    return resultado;
 }
+
 
 antlrcpp::Any Visitor::visitChamadaFuncao(gramaticaParser::ChamadaFuncaoContext *ctx) {
     std::string nomeFuncao = ctx->ID()->getText();
     int linha = ctx->getStart()->getLine();
 
-    auto chave = std::make_pair(nomeFuncao, linha);
-    // se já foi analisada essa chamada, evita repetir
-    if (chamadasJaAnalisadas.count(chave)) {
-        return tabelaPorEscopo["start"][nomeFuncao].tipo;
-    }
-
-    chamadasJaAnalisadas.insert(chave);
-
-    // Verifica se a função foi declarada
-    if (!tabelaPorEscopo["start"].count(nomeFuncao)) {
+    //SEMANTICA
+    // verifica se a função foi declarada
+    if (!funcoesDeclaradas.count(nomeFuncao)) {
         std::cerr << "ERRO: Linha " << linha
                   << ": Funcao '" << nomeFuncao
                   << "' chamada mas nao foi declarada.\n";
-        return std::string("undefined");
+        return ResultadoExpr{"undefined", ""};
     }
 
-    // Verifica número de argumentos (se existirem)
-    
-    int qtdPassados = ctx->argumentos() ? ctx->argumentos()->expressao().size() : 0;
-    int qtdEsperado = parametrosFuncao.count(nomeFuncao) ? parametrosFuncao[nomeFuncao].size() : 0;
-
-    if (qtdPassados != qtdEsperado) {
-        std::cerr << "ERRO: Linha " << linha
-                  << ": Funcao '" << nomeFuncao
-                  << "' esperava " << qtdEsperado
-                  << " argumentos, mas recebeu " << qtdPassados << ".\n";
-    }
-
-    //vereifica se os argumentos usados na func ja foram declarados
-     if (ctx->argumentos()) {
+    // avalia argumentos passados
+    std::vector<ResultadoExpr> argumentos;
+    if (ctx->argumentos()) {
         for (auto expr : ctx->argumentos()->expressao()) {
-            visit(expr);
+            argumentos.push_back(visit(expr).as<ResultadoExpr>());
         }
     }
 
-    return tabelaPorEscopo["start"][nomeFuncao].tipo;
+    // recupera a definiçao da função
+    auto funcCtx = funcoesDeclaradas[nomeFuncao];
+
+    // verifica parâmetros
+    std::vector<gramaticaParser::ParametroContext*> params;
+    if (funcCtx->parametros()) {
+        params = funcCtx->parametros()->parametro();
+    }
+
+    if (argumentos.size() != params.size()) {
+        std::cerr << "ERRO: Linha " << linha
+                  << ": Funcao '" << nomeFuncao
+                  << "' esperava " << params.size()
+                  << " argumentos, mas recebeu " << argumentos.size() << ".\n";
+        return ResultadoExpr{"undefined", ""};
+    }
+
+    //INICIA INTERPRETACAO
+    // salva escopo anterior
+    std::string escopoAnterior = escopoAtual;
+    escopoAtual = nomeFuncao;
+
+    // cria escopo da função com os parâmetros e seus valores
+    tabelaPorEscopo[escopoAtual].clear();
+    for (size_t i = 0; i < argumentos.size(); ++i) {
+        std::string nomeParam = params[i]->ID()->getText();
+        std::string tipoParam = params[i]->tipo()->getText();
+
+        Simbolo simbolo;
+        simbolo.nome = nomeParam;
+        simbolo.tipo = tipoParam;
+        simbolo.escopo = escopoAtual;
+        simbolo.valor = argumentos[i].valor;
+        simbolo.inicializado = true;
+        simbolo.linha = linha;
+
+        tabelaPorEscopo[escopoAtual][nomeParam] = simbolo;
+    }
+
+    // executa comandos da função (blocoFuncao -> comandos + retorno)
+    ResultadoExpr retornoFinal;
+    for (auto comando : funcCtx->blocoFuncao()->comando()) {
+        visit(comando);
+    }
+
+    antlrcpp::Any retorno = visit(funcCtx->blocoFuncao()->comandoRetorno());
+    if (retorno.is<ResultadoExpr>()) {
+        retornoFinal = retorno.as<ResultadoExpr>();
+    }
+
+    // restaura escopo pro formato originalk
+    //std::cout << "DEBUG: Funcao '" << nomeFuncao << "' retornou: " << retornoFinal.tipo << " = " << retornoFinal.valor << "\n";
+    escopoAtual = escopoAnterior;
+    return retornoFinal;
 }
 
 antlrcpp::Any Visitor::visitComandoRetorno(gramaticaParser::ComandoRetornoContext *ctx) {
     int linha = ctx->getStart()->getLine();
-    antlrcpp::Any anyTipo = visit(ctx->expressao());
-    std::string tipoExpr = anyTipo.is<std::string>() ? anyTipo.as<std::string>() : "undefined";
+    ResultadoExpr resultado = visit(ctx->expressao()).as<ResultadoExpr>();
 
-    if (!tipoFuncaoAtual.empty() && tipoExpr != "undefined" && tipoExpr != tipoFuncaoAtual) {
+    // verifica se o tipo do retorno é compatível com o tipo declarado da função
+    if (!tipoFuncaoAtual.empty() &&
+        resultado.tipo != "undefined" &&
+        resultado.tipo != tipoFuncaoAtual) {
+        
         std::cerr << "ERRO: Linha " << linha
-                  << ": Retorno de tipo '" << tipoExpr
+                  << ": Retorno de tipo '" << resultado.tipo
                   << "' nao compativel com tipo declarado da funcao ('"
                   << tipoFuncaoAtual << "').\n";
     }
 
-    return nullptr;
+    return resultado;
 }
 
 antlrcpp::Any Visitor::visitAcesso(gramaticaParser::AcessoContext *ctx) {
@@ -341,6 +422,13 @@ bool Visitor::existeVariavel(const std::string& nome) {
     return tabelaPorEscopo[escopoAtual].count(nome) || tabelaPorEscopo["start"].count(nome);
 }
 
+bool Visitor::ehNumero(const std::string& str) {
+    std::istringstream iss(str);
+    double d;
+    char c;
+    return iss >> d && !(iss >> c);
+}
+
 bool Visitor::atributoExiste(const std::string& obj, const std::string& atributo) {
     if (!existeVariavel(obj)) return false;
     std::string tipo = tabelaPorEscopo[escopoAtual][obj].tipo;
@@ -355,6 +443,7 @@ void Visitor::imprimirTabela() {
                       << " | tipo: " << simb.tipo
                       << " | escopo: " << simb.escopo
                       << " | linha: " << simb.linha
+                      << " | valor: " << simb.valor
                       << "\n";
         }
     }
