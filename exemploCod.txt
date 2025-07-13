@@ -20,13 +20,12 @@ start {
     //Batata btt = new Batata();
     
     Pessoa pss = new Pessoa();
-    //pss.teste = "uai";
     
     pss.idade = 25;
     pss.nome = "Fulano";
     
     int resultado = somar(3, 5);
-    printf(resultado);
+    printf("o resultado foi: " + resultado);
     
 
     int i = 20;

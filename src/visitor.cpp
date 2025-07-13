@@ -222,6 +222,17 @@ antlrcpp::Any Visitor::visitExpressaoSoma(gramaticaParser::ExpressaoSomaContext 
 
         ResultadoExpr direito = visit(ctx->expressaoProduto(i)).as<ResultadoExpr>();
 
+        // concatenação de string com qualquer coisa p/ os prints
+        if (op == "+" &&
+            ((resultado.tipo == "string" && direito.tipo != "undefined") ||
+            (direito.tipo == "string" && resultado.tipo != "undefined"))) {
+
+            resultado.tipo = "string";
+            resultado.valor = resultado.valor + direito.valor;
+            continue;
+        }
+
+        // soma/subtração numérica
         if ((resultado.tipo == "int" || resultado.tipo == "float") &&
             (direito.tipo == "int" || direito.tipo == "float")) {
 
@@ -235,11 +246,7 @@ antlrcpp::Any Visitor::visitExpressaoSoma(gramaticaParser::ExpressaoSomaContext 
 
             double valEsq = std::stod(resultado.valor);
             double valDir = std::stod(direito.valor);
-            double valFinal;
-
-            if (op == "+") valFinal = valEsq + valDir;
-            else if (op == "-") valFinal = valEsq - valDir;
-            else valFinal = 0;  // Operador inválido
+            double valFinal = (op == "+") ? valEsq + valDir : valEsq - valDir;
 
             resultado.tipo = tipoResultado;
             if (tipoResultado == "int")
@@ -252,6 +259,7 @@ antlrcpp::Any Visitor::visitExpressaoSoma(gramaticaParser::ExpressaoSomaContext 
             break;
         }
     }
+
 
     return resultado;
 }
@@ -414,6 +422,13 @@ antlrcpp::Any Visitor::visitAcesso(gramaticaParser::AcessoContext *ctx) {
                              : tabelaPorEscopo["start"][obj].tipo;
 
     return tabelaPorEscopo[tipoClasse][atributo].tipo;
+}
+
+antlrcpp::Any Visitor::visitComandoPrint(gramaticaParser::ComandoPrintContext *ctx) {
+    ResultadoExpr resultado = visit(ctx->expressao()).as<ResultadoExpr>();
+
+    std::cout << resultado.valor << std::endl;
+    return nullptr;
 }
 
 
