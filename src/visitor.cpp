@@ -68,42 +68,56 @@ antlrcpp::Any Visitor::visitDeclaracaoVariavel(gramaticaParser::DeclaracaoVariav
 
     std::set<std::string> tiposPrimitivos = {"int", "float", "char", "string"};
 
-    // Verifica se o tipo é válido (primitivo ou classe declarada)
+    // Verifica se o tipo é válido
     if (!tiposPrimitivos.count(tipo) && !tabelaPorEscopo["start"].count(tipo)) {
-        std::cerr << "ERRO: Linha " << linha
-                  << ": Tipo '" << tipo << "' nao declarado (classe inexistente?)\n";
+        std::cerr << "ERRO: Linha " << linha << ": Tipo '" << tipo << "' nao declarado (classe inexistente?)\n";
         return nullptr;
     }
 
-    // Verifica duplicação
     if (tabelaPorEscopo[escopoAtual].count(nome)) {
-        std::cerr << "ERRO: Linha " << linha
-                  << ": Variavel '" << nome
-                  << "' ja declarada no escopo '" << escopoAtual << "'.\n";
+        std::cerr << "ERRO: Linha " << linha << ": Variavel '" << nome << "' ja declarada no escopo '" << escopoAtual << "'.\n";
         return nullptr;
     }
 
-    // Avalia a expressão (se houver)
     Simbolo simb {nome, tipo, escopoAtual, linha, false, ""};
 
     if (ctx->expressao()) {
-        ResultadoExpr resultado = visit(ctx->expressao()).as<ResultadoExpr>();
+        std::string expressaoTexto = ctx->expressao()->getText();
 
-        if (resultado.tipo != "undefined" && resultado.tipo != tipo) {
-            std::cerr << "ERRO: Linha " << linha
-                    << ": Voce nao pode atribuir um tipo '" << resultado.tipo
-                    << "' a variavel '" << nome
-                    << "' de tipo '" << tipo << "'.\n";
-            return nullptr;
+        if (expressaoTexto.rfind("new ", 0) == 0) {
+            std::string nomeClasse = tipo;
+            if (!tabelaPorEscopo["start"].count(nomeClasse)) {
+                std::cerr << "ERRO: Linha " << linha << ": Classe '" << nomeClasse << "' nao foi declarada.\n";
+                return nullptr;
+            }
+
+            simb.inicializado = true;
+
+            // Instanciar atributos no escopo do objeto
+            for (const auto& [atributo, simboloClasse] : tabelaPorEscopo[nomeClasse]) {
+                Simbolo atributoInstancia = simboloClasse;
+                atributoInstancia.escopo = nome;
+                atributoInstancia.inicializado = false;
+                atributoInstancia.valor = "";
+
+                tabelaPorEscopo[nome][atributo] = atributoInstancia;
+            }
+
+            std::cout << "DEBUG: Objeto '" << nome << "' instanciado com base na classe '" << nomeClasse << "'\n";
+        } else {
+            ResultadoExpr resultado = visit(ctx->expressao()).as<ResultadoExpr>();
+            if (resultado.tipo != "undefined" && resultado.tipo != tipo) {
+                std::cerr << "ERRO: Linha " << linha << ": Voce nao pode atribuir um tipo '" << resultado.tipo
+                          << "' a variavel '" << nome << "' de tipo '" << tipo << "'.\n";
+                return nullptr;
+            }
+
+            simb.inicializado = true;
+            simb.valor = resultado.valor;
+            std::cout << "DEBUG: '" << nome << "' definido como " << resultado.valor << "\n";
         }
-
-        simb.inicializado = true;
-        simb.valor = resultado.valor;
-        //std::cout << "DEBUG: Resultado da expressao atribuida a '" << nome << "' = " << resultado.tipo << " " << resultado.valor << "\n";
-
     }
 
-    // Adiciona símbolo à tabela
     tabelaPorEscopo[escopoAtual][nome] = simb;
     return nullptr;
 }
@@ -114,40 +128,74 @@ antlrcpp::Any Visitor::visitAtribuicao(gramaticaParser::AtribuicaoContext *ctx) 
     int linha = ctx->getStart()->getLine();
     std::string tipoVar;
 
+    ResultadoExpr resultado = visit(ctx->expressao()).as<ResultadoExpr>();
+
+    // verifica se é acesso a atributo obj.atributo
     if (acesso.find('.') != std::string::npos) {
         auto ponto = acesso.find('.');
         std::string obj = acesso.substr(0, ponto);
-        std::string atributo = acesso.substr(ponto+1);
+        std::string atributo = acesso.substr(ponto + 1);
 
         if (!atributoExiste(obj, atributo)) {
             std::cerr << "ERRO: Linha " << linha
                       << ": Atributo '" << atributo
                       << "' nao pertence ao objeto '" << obj << "'.\n";
-        } else {
-            std::string tipoClasse = tabelaPorEscopo[escopoAtual][obj].tipo;
-            tipoVar = tabelaPorEscopo[tipoClasse][atributo].tipo;
+            return nullptr;
         }
+
+        std::string tipoClasse = tabelaPorEscopo[escopoAtual].count(obj)
+                               ? tabelaPorEscopo[escopoAtual][obj].tipo
+                               : tabelaPorEscopo["start"][obj].tipo;
+
+        tipoVar = tabelaPorEscopo[tipoClasse][atributo].tipo;
+
+        if (resultado.tipo != tipoVar && resultado.tipo != "undefined") {
+            std::cerr << "ERRO: Linha " << linha
+                      << ": Tipo incompativel na atribuicao de '" << acesso
+                      << "'. Esperado '" << tipoVar << "', recebido '" << resultado.tipo << "'.\n";
+            return nullptr;
+        }
+
+        // Armazena o valor no atributo da instância
+        Simbolo atributoSimb;
+        atributoSimb.nome = atributo;
+        atributoSimb.tipo = tipoVar;
+        atributoSimb.escopo = obj;
+        atributoSimb.linha = linha;
+        atributoSimb.inicializado = true;
+        atributoSimb.valor = resultado.valor;
+
+        tabelaPorEscopo[obj][atributo] = atributoSimb;
+
+        std::cout << "DEBUG: Atributo '" << acesso << "' definido como " << resultado.valor << "\n";
     } else {
+        // Atribuição simples (variável local)
         if (!existeVariavel(acesso)) {
             std::cerr << "ERRO: Linha " << linha
                       << ": Variavel '" << acesso
                       << "' usada sem estar declarada.\n";
-        } else {
-            tipoVar = tabelaPorEscopo[escopoAtual].count(acesso)
-                        ? tabelaPorEscopo[escopoAtual][acesso].tipo
-                        : tabelaPorEscopo["start"][acesso].tipo;
+            return nullptr;
         }
-    }
 
-    // Verifica tipo da expressão
-    antlrcpp::Any anyTipo = visit(ctx->expressao());
-    std::string tipoExpr = anyTipo.is<std::string>() ? anyTipo.as<std::string>() : "undefined";
+        tipoVar = tabelaPorEscopo[escopoAtual].count(acesso)
+                    ? tabelaPorEscopo[escopoAtual][acesso].tipo
+                    : tabelaPorEscopo["start"][acesso].tipo;
 
-    if (!tipoVar.empty() && tipoVar != tipoExpr && tipoExpr != "undefined") {
-        std::cerr << "ERRO: Linha " << linha
-                  << "Voce nao pode atribuir um tipo '" << tipoExpr
-                  << "' a variavel '" << acesso
-                  << "' de tipo '" << tipoVar << "'.\n";
+        if (!tipoVar.empty() && tipoVar != resultado.tipo && resultado.tipo != "undefined") {
+            std::cerr << "ERRO: Linha " << linha
+                      << ": Tipo incompativel na atribuicao de '" << acesso
+                      << "'. Esperado '" << tipoVar << "', recebido '" << resultado.tipo << "'.\n";
+            return nullptr;
+        }
+
+        Simbolo& simb = tabelaPorEscopo[escopoAtual].count(acesso)
+                        ? tabelaPorEscopo[escopoAtual][acesso]
+                        : tabelaPorEscopo["start"][acesso];
+
+        simb.valor = resultado.valor;
+        simb.inicializado = true;
+
+        std::cout << "DEBUG: Variavel '" << acesso << "' definida como " << resultado.valor << "\n";
     }
 
     return nullptr;
@@ -159,57 +207,65 @@ antlrcpp::Any Visitor::visitExpressao(gramaticaParser::ExpressaoContext *ctx) {
 
 antlrcpp::Any Visitor::visitExpressaoPrimaria(gramaticaParser::ExpressaoPrimariaContext *ctx) {
     if (ctx->NUM_INT()) {
-        return ResultadoExpr("int", ctx->getText());
+        return ResultadoExpr{"int", ctx->getText()};
     }
 
     if (ctx->NUM_FLOAT()) {
-        return ResultadoExpr("float", ctx->getText());
+        return ResultadoExpr{"float", ctx->getText()};
     }
 
     if (ctx->STRING()) {
-        std::string raw = ctx->getText();
-        return ResultadoExpr("string", raw.substr(1, raw.size() - 2));
+        std::string texto = ctx->STRING()->getText();
+        texto = texto.substr(1, texto.length() - 2); // remove aspas
+        return ResultadoExpr{"string", texto};
     }
 
     if (ctx->CHAR()) {
-        std::string raw = ctx->getText();
-        return ResultadoExpr("char", raw.substr(1, raw.size() - 2));
-    }
-
-    if (ctx->chamadaFuncao()) {
-        return visit(ctx->chamadaFuncao()).as<ResultadoExpr>();
+        std::string ch = ctx->CHAR()->getText();
+        ch = ch.substr(1, ch.length() - 2); // remove aspas simples
+        return ResultadoExpr{"char", ch};
     }
 
     if (ctx->ID()) {
-        std::string nomeVar = ctx->ID()->getText();
-        int linha = ctx->getStart()->getLine();
+        std::string texto = ctx->getText();
+        
+        // Se for algo como pss.idade
+        if (texto.find('.') != std::string::npos) {
+            auto ponto = texto.find('.');
+            std::string obj = texto.substr(0, ponto);
+            std::string atributo = texto.substr(ponto + 1);
 
-        if (!existeVariavel(nomeVar)) {
-            std::cerr << "ERRO: Linha " << linha
-                    << ": Variavel '" << nomeVar << "' nao foi declarada." << std::endl;
-            return ResultadoExpr("undefined", "");
+            if (!atributoExiste(obj, atributo)) {
+                std::cerr << "ERRO: Linha " << ctx->getStart()->getLine()
+                          << ": Atributo '" << atributo << "' nao pertence a '" << obj << "'\n";
+                return ResultadoExpr("undefined", "");
+            }
+
+            Simbolo simb = tabelaPorEscopo[obj][atributo];
+            if (!simb.inicializado) {
+                std::cerr << "ERRO: Linha " << ctx->getStart()->getLine()
+                          << ": Atributo '" << atributo << "' de '" << obj << "' nao inicializado.\n";
+                return ResultadoExpr(simb.tipo, "");
+            }
+
+            return ResultadoExpr(simb.tipo, simb.valor);
         }
 
-        Simbolo simb = tabelaPorEscopo[escopoAtual].count(nomeVar)
-                    ? tabelaPorEscopo[escopoAtual][nomeVar]
-                    : tabelaPorEscopo["start"][nomeVar];
-
-        if (!simb.inicializado) {
-            std::cerr << "ERRO: Linha " << linha
-                    << ": Variavel '" << nomeVar << "' usada sem estar inicializada." << std::endl;
-            return ResultadoExpr(simb.tipo, "");
-        }
-
-        return ResultadoExpr(simb.tipo, simb.valor);
+        // Variável simples
+        return acessarVariavel(texto);
     }
 
+    if (ctx->chamadaFuncao()) {
+        return visit(ctx->chamadaFuncao());
+    }
 
     if (ctx->expressao()) {
-        return visit(ctx->expressao()).as<ResultadoExpr>();
+        return visit(ctx->expressao());
     }
 
-    return ResultadoExpr();
+    return ResultadoExpr{"undefined", ""};
 }
+
 
 antlrcpp::Any Visitor::visitExpressaoSoma(gramaticaParser::ExpressaoSomaContext *ctx) {
     ResultadoExpr resultado = visit(ctx->expressaoProduto(0)).as<ResultadoExpr>();
@@ -437,6 +493,18 @@ bool Visitor::existeVariavel(const std::string& nome) {
     return tabelaPorEscopo[escopoAtual].count(nome) || tabelaPorEscopo["start"].count(nome);
 }
 
+ResultadoExpr Visitor::acessarVariavel(const std::string& nome) {
+    if (tabelaPorEscopo[escopoAtual].count(nome)) {
+        Simbolo s = tabelaPorEscopo[escopoAtual][nome];
+        return ResultadoExpr{s.tipo, s.valor};
+    } else if (tabelaPorEscopo["start"].count(nome)) {
+        Simbolo s = tabelaPorEscopo["start"][nome];
+        return ResultadoExpr{s.tipo, s.valor};
+    } else {
+        return ResultadoExpr{"undefined", ""};
+    }
+}
+
 bool Visitor::ehNumero(const std::string& str) {
     std::istringstream iss(str);
     double d;
@@ -446,9 +514,24 @@ bool Visitor::ehNumero(const std::string& str) {
 
 bool Visitor::atributoExiste(const std::string& obj, const std::string& atributo) {
     if (!existeVariavel(obj)) return false;
-    std::string tipo = tabelaPorEscopo[escopoAtual][obj].tipo;
+
+    // Obtém o tipo do objeto a partir do escopo atual ou do escopo global
+    std::string tipo;
+    if (tabelaPorEscopo[escopoAtual].count(obj)) {
+        tipo = tabelaPorEscopo[escopoAtual][obj].tipo;
+    } else if (tabelaPorEscopo["start"].count(obj)) {
+        tipo = tabelaPorEscopo["start"][obj].tipo;
+    } else {
+        return false;
+    }
+
+    // Verifica se a classe está registrada
+    if (!tabelaPorEscopo.count(tipo)) return false;
+
+    // Verifica se o atributo pertence à definição da classe
     return tabelaPorEscopo[tipo].count(atributo);
 }
+
 
 void Visitor::imprimirTabela() {
     std::cout << "\nTabela de Simbolos:\n";

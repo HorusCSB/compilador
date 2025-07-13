@@ -16,6 +16,13 @@ struct Simbolo {
     std::string valor = "";
 };
 
+struct ResultadoExpr {
+    std::string tipo;
+    std::string valor;
+
+    ResultadoExpr(std::string t = "undefined", std::string v = "") : tipo(t), valor(v) {}
+};
+
 class Visitor : public gramaticaBaseVisitor {
 public:
     std::string escopoAtual = "global";
@@ -38,19 +45,13 @@ public:
 
     void imprimirTabela();
     bool existeVariavel(const std::string& nome);
+    ResultadoExpr acessarVariavel(const std::string& nome);
     bool ehNumero(const std::string& str);
     bool atributoExiste(const std::string& obj, const std::string& atributo);
 
 private:
     std::set<std::pair<std::string, int>> chamadasJaAnalisadas;
     std::unordered_map<std::string, gramaticaParser::DeclaracaoFuncaoContext*> funcoesDeclaradas;
-
-    struct ResultadoExpr {
-        std::string tipo;
-        std::string valor;
-
-        ResultadoExpr(std::string t = "undefined", std::string v = "") : tipo(t), valor(v) {}
-    };
 };
 
 #endif
