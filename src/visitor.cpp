@@ -206,7 +206,7 @@ antlrcpp::Any Visitor::visitAtribuicao(gramaticaParser::AtribuicaoContext *ctx) 
         simb.valor = resultado.valor;
         simb.inicializado = true;
 
-        std::cout << "DEBUG: Variavel '" << acesso << "' definida como " << resultado.valor << "\n";
+        //std::cout << "DEBUG: Variavel '" << acesso << "' definida como " << resultado.valor << "\n";
     }
 
     return nullptr;
@@ -262,8 +262,14 @@ antlrcpp::Any Visitor::visitExpressaoPrimaria(gramaticaParser::ExpressaoPrimaria
             return ResultadoExpr(simb.tipo, simb.valor);
         }
 
-        // Variável simples
-        return acessarVariavel(texto);
+        // variável simples
+        if (!existeVariavel(texto)) {
+            std::cerr << "ERRO: Linha " << ctx->getStart()->getLine()
+                    << ": Variavel '" << texto << "' nao foi declarada.\n";
+            return ResultadoExpr{"undefined", ""};
+        }
+
+    return acessarVariavel(texto);
     }
 
     if (ctx->chamadaFuncao()) {

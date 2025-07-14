@@ -30,7 +30,7 @@ start {
 
     int quero = 3;
     int gerar = 5;
-    int codigo = quero + gerar;
+    int codigo = a + gerar;
     
 
     int i = 20;
