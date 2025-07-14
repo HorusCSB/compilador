@@ -7,16 +7,14 @@ store i32 , i32* %r
 %b = alloca i32
 store i32 2, i32* %b
 %r = alloca i32
-store i32 8, i32* %r
+store i32 15, i32* %r
 %resultado = alloca i32
-store i32 8, i32* %resultado
+store i32 15, i32* %resultado
 %quero = alloca i32
 store i32 3, i32* %quero
 %gerar = alloca i32
 store i32 5, i32* %gerar
 %codigo = alloca i32
-store i32 , i32* %codigo
+store i32 8, i32* %codigo
 %i = alloca i32
 store i32 20, i32* %i
-%x = alloca i32
-store i32 22, i32* %x

@@ -504,6 +504,69 @@ antlrcpp::Any Visitor::visitComandoPrint(gramaticaParser::ComandoPrintContext *c
     return nullptr;
 }
 
+antlrcpp::Any Visitor::visitComandoScan(gramaticaParser::ComandoScanContext *ctx) {
+    std::string nome = ctx->acesso()->getText();
+    int linha = ctx->getStart()->getLine();
+
+    std::string tipoVar;
+    Simbolo* simbolo = nullptr;
+
+    // acesso a atributo de objeto (ex: obj.atributo)
+    if (nome.find('.') != std::string::npos) {
+        auto ponto = nome.find('.');
+        std::string obj = nome.substr(0, ponto);
+        std::string atributo = nome.substr(ponto + 1);
+
+        if (!atributoExiste(obj, atributo)) {
+            std::cerr << "ERRO: Linha " << linha
+                      << ": Atributo '" << atributo
+                      << "' nao pertence ao objeto '" << obj << "'.\n";
+            return nullptr;
+        }
+
+        simbolo = &tabelaPorEscopo[obj][atributo];
+        tipoVar = simbolo->tipo;
+    } else {
+        // variavel simples
+        if (!existeVariavel(nome)) {
+            std::cerr << "ERRO: Linha " << linha
+                      << ": Variavel '" << nome
+                      << "' nao foi declarada.\n";
+            return nullptr;
+        }
+
+        simbolo = tabelaPorEscopo[escopoAtual].count(nome)
+                    ? &tabelaPorEscopo[escopoAtual][nome]
+                    : &tabelaPorEscopo["start"][nome];
+        tipoVar = simbolo->tipo;
+    }
+
+    // leitura da entrada do usuário
+    std::string valorLido;
+    std::cout << ">> ";
+    std::getline(std::cin, valorLido);
+
+    // validacao de tipo
+    if (tipoVar == "int" || tipoVar == "float") {
+        if (!ehNumero(valorLido)) {
+            std::cerr << "ERRO: Linha " << linha
+                      << ": Valor digitado nao e um numero valido para '" << tipoVar << "'.\n";
+            return nullptr;
+        }
+    } else if (tipoVar == "char") {
+        if (valorLido.length() != 1) {
+            std::cerr << "ERRO: Linha " << linha
+                      << ": Esperado um unico caractere para tipo 'char'.\n";
+            return nullptr;
+        }
+    }
+
+    simbolo->valor = valorLido;
+    simbolo->inicializado = true;
+
+    return nullptr;
+}
+
 
 //---------------------------------AUXILIARES------------------------------------------------
 bool Visitor::existeVariavel(const std::string& nome) {

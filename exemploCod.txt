@@ -24,22 +24,27 @@ start {
     pss.idade = 25;
     pss.nome = "Fulano";
     
-    int resultado = somar(3, 5);
+    int resultado = somar(10, 5);
     printf("o resultado foi: " + resultado);
 
 
     int quero = 3;
     int gerar = 5;
-    int codigo = a + gerar;
+    int codigo = quero + gerar;
     
 
     int i = 20;
-    int x = 22;
+    int idadeUser;
+
+    scanf(idadeUser);
+
+    printf("a idade do usuario eh: " + idadeUser);
+
     while(i < 26){
     
-        if (x < 25) {
+        if (idadeUser < 25) {
             //printf("ta novo");
-        } else if (x == 25) {
+        } else if (idadeUser == 25) {
             //printf("acertou");
         } else {
             //printf("ta veio");
