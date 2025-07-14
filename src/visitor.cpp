@@ -1,4 +1,8 @@
+//limpar: cmake -B build
+//rodar: cmake --build build
+
 #include "visitor.h"
+#include <sstream>
 
 antlrcpp::Any Visitor::visitDeclaracaoClasse(gramaticaParser::DeclaracaoClasseContext *ctx) {
     std::string nomeClasse = ctx->ID()->getText();
@@ -103,7 +107,7 @@ antlrcpp::Any Visitor::visitDeclaracaoVariavel(gramaticaParser::DeclaracaoVariav
                 tabelaPorEscopo[nome][atributo] = atributoInstancia;
             }
 
-            std::cout << "DEBUG: Objeto '" << nome << "' instanciado com base na classe '" << nomeClasse << "'\n";
+            //std::cout << "DEBUG: Objeto '" << nome << "' instanciado com base na classe '" << nomeClasse << "'\n";
         } else {
             ResultadoExpr resultado = visit(ctx->expressao()).as<ResultadoExpr>();
             if (resultado.tipo != "undefined" && resultado.tipo != tipo) {
@@ -114,11 +118,18 @@ antlrcpp::Any Visitor::visitDeclaracaoVariavel(gramaticaParser::DeclaracaoVariav
 
             simb.inicializado = true;
             simb.valor = resultado.valor;
-            std::cout << "DEBUG: '" << nome << "' definido como " << resultado.valor << "\n";
+            //std::cout << "DEBUG: '" << nome << "' definido como " << resultado.valor << "\n";
         }
     }
 
     tabelaPorEscopo[escopoAtual][nome] = simb;
+
+    if (tipo == "int" && simb.inicializado) {
+        std::string nomeVar = "%" + nome;
+        llvmSaida << nomeVar << " = alloca i32\n";
+        llvmSaida << "store i32 " << simb.valor << ", i32* " << nomeVar << "\n";
+    }
+
     return nullptr;
 }
 
@@ -167,7 +178,7 @@ antlrcpp::Any Visitor::visitAtribuicao(gramaticaParser::AtribuicaoContext *ctx) 
 
         tabelaPorEscopo[obj][atributo] = atributoSimb;
 
-        std::cout << "DEBUG: Atributo '" << acesso << "' definido como " << resultado.valor << "\n";
+        //std::cout << "DEBUG: Atributo '" << acesso << "' definido como " << resultado.valor << "\n";
     } else {
         // Atribuição simples (variável local)
         if (!existeVariavel(acesso)) {

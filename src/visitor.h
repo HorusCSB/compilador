@@ -26,6 +26,7 @@ struct ResultadoExpr {
 class Visitor : public gramaticaBaseVisitor {
 public:
     std::string escopoAtual = "global";
+    std::ostringstream llvmSaida;
     std::map<std::string, std::map<std::string, Simbolo>> tabelaPorEscopo;
     std::unordered_map<std::string, std::vector<std::string>> parametrosFuncao;
     std::string tipoFuncaoAtual;

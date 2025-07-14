@@ -9,10 +9,10 @@
 #include "listener.h"
 
 int main(int argc, const char* argv[]) {
-    try{
+    try {
         std::ifstream stream("exemploCod.txt");
         if (!stream) {
-            std::cerr << "Erro ao abrir o arquivo exemploCod.txt\n" << std::filesystem::current_path() << std::endl;;
+            std::cerr << "Erro ao abrir o arquivo exemploCod.txt\n" << std::filesystem::current_path() << std::endl;
             return 1;
         }
 
@@ -34,12 +34,28 @@ int main(int argc, const char* argv[]) {
         antlr4::tree::ParseTree *tree = parser.programa();
 
         Visitor visitor;
+
+        // cabeçalho LLVM
+        visitor.llvmSaida << "; Código LLVM gerado\n";
+        visitor.llvmSaida << "declare i32 @printf(i8*, ...)\n";
+        visitor.llvmSaida << "@.str = private constant [4 x i8] c\"%d\\0A\\00\"\n\n";
+
         visitor.visit(tree);
         visitor.imprimirTabela();
+
+        // gera arquivo .ll
+        std::ofstream saidaLLVM("output.ll");
+        if (!saidaLLVM) {
+            std::cerr << "Erro ao criar output.ll\n";
+            return 1;
+        }
+        saidaLLVM << visitor.llvmSaida.str();
+        saidaLLVM.close();
     } catch (const std::exception& e) {
         std::cerr << "Excecao capturada: " << e.what() << std::endl;
     } catch (...) {
         std::cerr << "Erro inesperado (abort ou erro fatal)" << std::endl;
     }
+
     return 0;
 }

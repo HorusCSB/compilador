@@ -26,6 +26,11 @@ start {
     
     int resultado = somar(3, 5);
     printf("o resultado foi: " + resultado);
+
+
+    int quero = 3;
+    int gerar = 5;
+    int codigo = quero + gerar;
     
 
     int i = 20;
@@ -33,11 +38,11 @@ start {
     while(i < 26){
     
         if (x < 25) {
-            printf("ta novo");
+            //printf("ta novo");
         } else if (x == 25) {
-            printf("acertou");
+            //printf("acertou");
         } else {
-            printf("ta veio");
+            //printf("ta veio");
         }
         
         i = i + 1;
