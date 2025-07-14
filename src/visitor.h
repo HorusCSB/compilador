@@ -44,6 +44,12 @@ public:
     antlrcpp::Any visitAcesso(gramaticaParser::AcessoContext *ctx) override;
     antlrcpp::Any visitComandoPrint(gramaticaParser::ComandoPrintContext *ctx);
     antlrcpp::Any visitComandoScan(gramaticaParser::ComandoScanContext *ctx);
+    antlrcpp::Any visitEstruturaIf(gramaticaParser::EstruturaIfContext *ctx) override;
+    antlrcpp::Any visitEstruturaWhile(gramaticaParser::EstruturaWhileContext *ctx);
+    antlrcpp::Any visitCondicao(gramaticaParser::CondicaoContext *ctx);
+    antlrcpp::Any visitCondicaoAnd(gramaticaParser::CondicaoAndContext *ctx);
+    antlrcpp::Any visitCondicaoNot(gramaticaParser::CondicaoNotContext *ctx);
+    antlrcpp::Any visitCondicaoPrimaria(gramaticaParser::CondicaoPrimariaContext *ctx);
 
     void imprimirTabela();
     bool existeVariavel(const std::string& nome);

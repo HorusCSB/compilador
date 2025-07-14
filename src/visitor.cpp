@@ -567,6 +567,159 @@ antlrcpp::Any Visitor::visitComandoScan(gramaticaParser::ComandoScanContext *ctx
     return nullptr;
 }
 
+antlrcpp::Any Visitor::visitEstruturaIf(gramaticaParser::EstruturaIfContext *ctx) {
+    // Avalia a condição principal do IF
+    ResultadoExpr condicaoIf = visit(ctx->condicao()).as<ResultadoExpr>();
+    if (condicaoIf.tipo != "int") {
+        std::cerr << "ERRO: Linha " << ctx->getStart()->getLine()
+                  << ": Condição do IF deve ser do tipo int.\n";
+        return nullptr;
+    }
+
+    // se condição for verdadeira (valor diferente de zero)
+    if (condicaoIf.valor != "0") {
+        visit(ctx->bloco());
+        return nullptr;
+    }
+
+    // ELSE IFs
+    for (auto elseifCtx : ctx->estruturaElsif()) {
+        ResultadoExpr condElseIf = visit(elseifCtx->condicao()).as<ResultadoExpr>();
+
+        if (condElseIf.tipo != "int") {
+            std::cerr << "ERRO: Linha " << elseifCtx->getStart()->getLine()
+                      << ": Condição do ELSE IF deve ser do tipo int.\n";
+            return nullptr;
+        }
+
+        if (condElseIf.valor != "0") {
+            visit(elseifCtx->bloco());
+            return nullptr;
+        }
+    }
+
+    // ELSE (se existir)
+    if (ctx->estruturaElse()) {
+        visit(ctx->estruturaElse()->bloco());
+    }
+
+    return nullptr;
+}
+
+
+antlrcpp::Any Visitor::visitEstruturaWhile(gramaticaParser::EstruturaWhileContext *ctx) {
+    int linha = ctx->getStart()->getLine();
+
+    while (true) {
+        ResultadoExpr cond = visit(ctx->condicao()).as<ResultadoExpr>();
+
+        if (cond.tipo != "int") {
+            std::cerr << "ERRO: Linha " << linha << ": Condição do while deve ser do tipo int.\n";
+            break;
+        }
+
+        // Se condição for 0 (falsa), sai do loop
+        if (cond.valor == "0")
+            break;
+
+        // Executa o bloco do while
+        visit(ctx->bloco());
+    }
+
+    return nullptr;
+}
+
+antlrcpp::Any Visitor::visitCondicao(gramaticaParser::CondicaoContext *ctx) {
+    ResultadoExpr resultado = visit(ctx->condicaoAnd(0)).as<ResultadoExpr>();
+
+    for (size_t i = 1; i < ctx->condicaoAnd().size(); ++i) {
+        ResultadoExpr dir = visit(ctx->condicaoAnd(i)).as<ResultadoExpr>();
+
+        // Qualquer parte indefinida torna tudo indefinido
+        if (resultado.tipo == "undefined" || dir.tipo == "undefined") {
+            return ResultadoExpr{"undefined", ""};
+        }
+
+        bool esq = std::stoi(resultado.valor) != 0;
+        bool dire = std::stoi(dir.valor) != 0;
+
+        resultado.tipo = "int";
+        resultado.valor = (esq || dire) ? "1" : "0";
+    }
+
+    return resultado;
+}
+
+antlrcpp::Any Visitor::visitCondicaoAnd(gramaticaParser::CondicaoAndContext *ctx) {
+    ResultadoExpr resultado = visit(ctx->condicaoNot(0)).as<ResultadoExpr>();
+
+    for (size_t i = 1; i < ctx->condicaoNot().size(); ++i) {
+        ResultadoExpr dir = visit(ctx->condicaoNot(i)).as<ResultadoExpr>();
+
+        if (resultado.tipo == "undefined" || dir.tipo == "undefined") {
+            return ResultadoExpr{"undefined", ""};
+        }
+
+        bool esqBool = std::stoi(resultado.valor) != 0;
+        bool dirBool = std::stoi(dir.valor) != 0;
+
+        resultado.tipo = "int";
+        resultado.valor = (esqBool && dirBool) ? "1" : "0";
+    }
+
+    return resultado;
+}
+
+antlrcpp::Any Visitor::visitCondicaoNot(gramaticaParser::CondicaoNotContext *ctx) {
+    if (ctx->NOT()) {
+        ResultadoExpr valor = visit(ctx->condicaoNot()).as<ResultadoExpr>();
+        if (valor.tipo == "undefined") return valor;
+
+        bool val = std::stoi(valor.valor) != 0;
+        return ResultadoExpr{"int", val ? "0" : "1"};
+    } else {
+        return visit(ctx->condicaoPrimaria());
+    }
+}
+
+antlrcpp::Any Visitor::visitCondicaoPrimaria(gramaticaParser::CondicaoPrimariaContext *ctx) {
+    if (ctx->expressao().size() == 2 && ctx->operadorComparacao()) {
+        ResultadoExpr esq = visit(ctx->expressao(0)).as<ResultadoExpr>();
+        ResultadoExpr dir = visit(ctx->expressao(1)).as<ResultadoExpr>();
+        std::string op = ctx->operadorComparacao()->getText();
+
+        if (esq.tipo == "undefined" || dir.tipo == "undefined") {
+            return ResultadoExpr{"undefined", ""};
+        }
+
+        double valEsq = std::stod(esq.valor);
+        double valDir = std::stod(dir.valor);
+        bool resultado = false;
+
+        if (op == "==") resultado = (valEsq == valDir);
+        else if (op == "!=") resultado = (valEsq != valDir);
+        else if (op == "<")  resultado = (valEsq <  valDir);
+        else if (op == "<=") resultado = (valEsq <= valDir);
+        else if (op == ">")  resultado = (valEsq >  valDir);
+        else if (op == ">=") resultado = (valEsq >= valDir);
+
+        return ResultadoExpr{"int", resultado ? "1" : "0"};
+    }
+
+    if (ctx->acesso()) {
+        ResultadoExpr valor = visit(ctx->acesso()).as<ResultadoExpr>();
+        return ResultadoExpr{"int", (valor.valor != "0" && !valor.valor.empty()) ? "1" : "0"};
+    }
+
+    if (ctx->condicao()) {
+        return visit(ctx->condicao());
+    }
+
+    return ResultadoExpr{"undefined", ""};
+}
+
+
+
 
 //---------------------------------AUXILIARES------------------------------------------------
 bool Visitor::existeVariavel(const std::string& nome) {

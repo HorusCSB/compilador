@@ -33,21 +33,22 @@ start {
     int codigo = quero + gerar;
     
 
-    int i = 20;
     int idadeUser;
 
     scanf(idadeUser);
 
-    printf("a idade do usuario eh: " + idadeUser);
+    printf("voce inseriu: " + idadeUser);
 
+    int i = 20;
     while(i < 26){
     
-        if (idadeUser < 25) {
-            //printf("ta novo");
-        } else if (idadeUser == 25) {
-            //printf("acertou");
-        } else {
-            //printf("ta veio");
+        if(i == idadeUser)
+        {
+            printf("a idade do usuario eh: " + i);
+        }
+        else
+        {
+            printf("a idade do usuario nao eh " + i);
         }
         
         i = i + 1;
