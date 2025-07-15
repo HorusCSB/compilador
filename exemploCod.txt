@@ -11,7 +11,7 @@ int somar(int a, int b) {
 
 start {
     char c = 'a';
-
+    
     //string teste = 111;
     //int a = "banana";
     //int kkkkkk = 2.5;
@@ -24,7 +24,7 @@ start {
     pss.idade = 25;
     pss.nome = "Fulano";
     
-    int resultado = somar(10, 5);
+    int resultado = somar(1, 5);
     printf("o resultado foi: " + resultado);
 
 
@@ -35,22 +35,22 @@ start {
 
     int idadeUser;
 
-    scanf(idadeUser);
+    //scanf(idadeUser);
 
-    printf("voce inseriu: " + idadeUser);
+    //printf("voce inseriu: " + idadeUser);
 
     int i = 20;
-    while(i < 26){
-    
-        if(i == idadeUser)
-        {
-            printf("a idade do usuario eh: " + i);
-        }
-        else
-        {
-            printf("a idade do usuario nao eh " + i);
-        }
-        
-        i = i + 1;
-    }
+    //while(i < 26){
+    // 
+    //    if(i == idadeUser)
+    //    {
+    //        printf("a idade do usuario eh: " + i);
+    //    }
+    //    else
+    //    {
+    //        printf("a idade do usuario nao eh: " + i);
+    //   }
+    //    
+    //    i = i + 1;
+    //}
 }

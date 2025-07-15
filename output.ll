@@ -6,10 +6,8 @@ declare i32 @printf(i8*, ...)
 store i32 , i32* %r
 %b = alloca i32
 store i32 2, i32* %b
-%r = alloca i32
-store i32 15, i32* %r
 %resultado = alloca i32
-store i32 15, i32* %resultado
+store i32 , i32* %resultado
 %quero = alloca i32
 store i32 3, i32* %quero
 %gerar = alloca i32

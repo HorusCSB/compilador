@@ -72,7 +72,7 @@ antlrcpp::Any Visitor::visitDeclaracaoVariavel(gramaticaParser::DeclaracaoVariav
 
     std::set<std::string> tiposPrimitivos = {"int", "float", "char", "string"};
 
-    // Verifica se o tipo é válido
+    // verifica se o tipo é válido
     if (!tiposPrimitivos.count(tipo) && !tabelaPorEscopo["start"].count(tipo)) {
         std::cerr << "ERRO: Linha " << linha << ": Tipo '" << tipo << "' nao declarado (classe inexistente?)\n";
         return nullptr;
@@ -405,6 +405,20 @@ antlrcpp::Any Visitor::visitChamadaFuncao(gramaticaParser::ChamadaFuncaoContext 
                   << "' esperava " << params.size()
                   << " argumentos, mas recebeu " << argumentos.size() << ".\n";
         return ResultadoExpr{"undefined", ""};
+    }
+
+    for (size_t i = 0; i < argumentos.size(); ++i) {
+        std::string tipoEsperado = params[i]->tipo()->getText();
+        std::string tipoRecebido = argumentos[i].tipo;
+
+        if (tipoEsperado != tipoRecebido && tipoRecebido != "undefined") {
+            std::cerr << "ERRO: Linha " << linha
+                    << ": Argumento " << (i + 1)
+                    << " da funcao '" << nomeFuncao
+                    << "' esperava tipo '" << tipoEsperado
+                    << "', mas recebeu tipo '" << tipoRecebido << "'.\n";
+            return ResultadoExpr{"undefined", ""};
+        }
     }
 
     //INICIA INTERPRETACAO
