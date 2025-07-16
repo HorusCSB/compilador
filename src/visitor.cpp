@@ -124,10 +124,16 @@ antlrcpp::Any Visitor::visitDeclaracaoVariavel(gramaticaParser::DeclaracaoVariav
 
     tabelaPorEscopo[escopoAtual][nome] = simb;
 
-    if (tipo == "int" && simb.inicializado) {
+    if (tipo == "int" && !variaveisLLVMGeradas.count(nome)) {
         std::string nomeVar = "%" + nome;
+        variaveisLLVMGeradas.insert(nome);
         llvmSaida << nomeVar << " = alloca i32\n";
-        llvmSaida << "store i32 " << simb.valor << ", i32* " << nomeVar << "\n";
+
+        if (simb.inicializado && !simb.valor.empty()) {
+            llvmSaida << "store i32 " << simb.valor << ", i32* " << nomeVar << "\n";
+        } else {
+            llvmSaida << "store i32 0, i32* " << nomeVar << "\n";
+        }
     }
 
     return nullptr;

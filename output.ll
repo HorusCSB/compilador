@@ -1,11 +1,10 @@
 ; Código LLVM gerado
-declare i32 @printf(i8*, ...)
-@.str = private constant [4 x i8] c"%d\0A\00"
-
+define i32 @main() {
+entry:
+%idade = alloca i32
+store i32 0, i32* %idade
 %r = alloca i32
-store i32 , i32* %r
-%r = alloca i32
-store i32 6, i32* %r
+store i32 0, i32* %r
 %resultado = alloca i32
 store i32 6, i32* %resultado
 %a = alloca i32
@@ -16,3 +15,5 @@ store i32 5, i32* %b
 store i32 8, i32* %c
 %i = alloca i32
 store i32 20, i32* %i
+ret i32 0
+}

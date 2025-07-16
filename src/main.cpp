@@ -37,8 +37,8 @@ int main(int argc, const char* argv[]) {
 
         // cabeçalho LLVM
         visitor.llvmSaida << "; Código LLVM gerado\n";
-        visitor.llvmSaida << "declare i32 @printf(i8*, ...)\n";
-        visitor.llvmSaida << "@.str = private constant [4 x i8] c\"%d\\0A\\00\"\n\n";
+        visitor.llvmSaida << "define i32 @main() {\n";
+        visitor.llvmSaida << "entry:\n";
 
         visitor.visit(tree);
         visitor.imprimirTabela();
@@ -49,6 +49,8 @@ int main(int argc, const char* argv[]) {
             std::cerr << "Erro ao criar output.ll\n";
             return 1;
         }
+        visitor.llvmSaida << "ret i32 0\n";
+        visitor.llvmSaida << "}\n";
         saidaLLVM << visitor.llvmSaida.str();
         saidaLLVM.close();
     } catch (const std::exception& e) {

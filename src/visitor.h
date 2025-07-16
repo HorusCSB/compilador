@@ -30,6 +30,7 @@ public:
     std::map<std::string, std::map<std::string, Simbolo>> tabelaPorEscopo;
     std::unordered_map<std::string, std::vector<std::string>> parametrosFuncao;
     std::string tipoFuncaoAtual;
+    std::set<std::string> variaveisLLVMGeradas;
 
     antlrcpp::Any visitDeclaracaoClasse(gramaticaParser::DeclaracaoClasseContext *ctx) override;
     antlrcpp::Any visitDeclaracaoFuncao(gramaticaParser::DeclaracaoFuncaoContext *ctx) override;
