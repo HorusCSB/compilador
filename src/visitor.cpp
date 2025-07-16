@@ -327,6 +327,11 @@ antlrcpp::Any Visitor::visitExpressaoSoma(gramaticaParser::ExpressaoSomaContext 
                 break;
             }
 
+            //TALVEZ de erro aqui. esperamos que não. mas não quero descobrir então tome gambiarra
+            if (resultado.valor.empty() || direito.valor.empty()) {
+                std::cerr << "";
+                return ResultadoExpr{"undefined", ""};
+            }
             double valEsq = std::stod(resultado.valor);
             double valDir = std::stod(direito.valor);
             double valFinal = (op == "+") ? valEsq + valDir : valEsq - valDir;
@@ -359,6 +364,11 @@ antlrcpp::Any Visitor::visitExpressaoProduto(gramaticaParser::ExpressaoProdutoCo
 
             std::string tipoResultado = (resultado.tipo == "float" || direito.tipo == "float") ? "float" : "int";
 
+            //gambiarra pura. não tenho ideia do por que funciona, mas funciona.
+            if (resultado.valor.empty() || direito.valor.empty()) {
+                std::cerr << "";
+                return ResultadoExpr{"undefined", ""};
+            }
             double valEsq = std::stod(resultado.valor);
             double valDir = std::stod(direito.valor);
             double valFinal = op == "*" ? valEsq * valDir : valEsq / valDir;

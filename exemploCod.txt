@@ -3,20 +3,23 @@ class Pessoa{
     string nome;
 }
 
-int somar(int a, int b) {
-    int r = a + b;
+int somar(int a, int b, int c, int d) {
+    int r = a + b * c + d;
 
     return r;
 }
 
 start {
-    int resultado = somar(1, 5);
+    int resultado = somar(1, 5, 3, 1);
     printf("o resultado foi: " + resultado);
 
     char exChar = 'a';
+    string oii = "esse eh um teste de string";
     int a = 3;
     int b = 5;
     int c = a + b;
+
+    printf(oii);
     
     Pessoa pss = new Pessoa();
     pss.idade = 0;

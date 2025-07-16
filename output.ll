@@ -6,7 +6,7 @@ store i32 0, i32* %idade
 %r = alloca i32
 store i32 0, i32* %r
 %resultado = alloca i32
-store i32 6, i32* %resultado
+store i32 17, i32* %resultado
 %a = alloca i32
 store i32 3, i32* %a
 %b = alloca i32
