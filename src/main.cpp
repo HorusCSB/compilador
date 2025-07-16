@@ -41,7 +41,7 @@ int main(int argc, const char* argv[]) {
         visitor.llvmSaida << "@.str = private constant [4 x i8] c\"%d\\0A\\00\"\n\n";
 
         visitor.visit(tree);
-        //visitor.imprimirTabela();
+        visitor.imprimirTabela();
 
         // gera arquivo .ll
         std::ofstream saidaLLVM("output.ll");

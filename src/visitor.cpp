@@ -237,6 +237,10 @@ antlrcpp::Any Visitor::visitExpressaoPrimaria(gramaticaParser::ExpressaoPrimaria
         return ResultadoExpr{"char", ch};
     }
 
+    if (ctx->acesso()) {
+        return visit(ctx->acesso()).as<ResultadoExpr>();
+    }
+
     if (ctx->ID()) {
         std::string texto = ctx->getText();
         
@@ -504,11 +508,13 @@ antlrcpp::Any Visitor::visitAcesso(gramaticaParser::AcessoContext *ctx) {
     }
 
     // Retorna o tipo do atributo
-    std::string tipoClasse = tabelaPorEscopo[escopoAtual].count(obj)
-                             ? tabelaPorEscopo[escopoAtual][obj].tipo
-                             : tabelaPorEscopo["start"][obj].tipo;
-
-    return tabelaPorEscopo[tipoClasse][atributo].tipo;
+    Simbolo simb = tabelaPorEscopo[obj][atributo];
+    if (!simb.inicializado) {
+        std::cerr << "ERRO: Linha " << linha << ": Atributo '" << atributo
+                << "' de '" << obj << "' nao inicializado.\n";
+        return ResultadoExpr("undefined", "");
+    }
+    return ResultadoExpr{simb.tipo, simb.valor};
 }
 
 antlrcpp::Any Visitor::visitComandoPrint(gramaticaParser::ComandoPrintContext *ctx) {

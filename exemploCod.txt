@@ -10,47 +10,35 @@ int somar(int a, int b) {
 }
 
 start {
-    char c = 'a';
-    
-    //string teste = 111;
-    //int a = "banana";
-    //int kkkkkk = 2.5;
-    int b = 2;
-
-    //Batata btt = new Batata();
-    
-    Pessoa pss = new Pessoa();
-    
-    pss.idade = 25;
-    pss.nome = "Fulano";
-    
     int resultado = somar(1, 5);
     printf("o resultado foi: " + resultado);
 
-
-    int quero = 3;
-    int gerar = 5;
-    int codigo = quero + gerar;
+    char exChar = 'a';
+    int a = 3;
+    int b = 5;
+    int c = a + b;
     
+    Pessoa pss = new Pessoa();
+    pss.idade = 0;
+    pss.nome = "";
 
-    int idadeUser;
-
-    //scanf(idadeUser);
-
-    //printf("voce inseriu: " + idadeUser);
+    printf("qual o nome do usuario? ");
+    scanf(pss.nome);
+    printf("insira a idade de " + pss.nome);
+    scanf(pss.idade);
 
     int i = 20;
-    //while(i < 26){
-    // 
-    //    if(i == idadeUser)
-    //    {
-    //        printf("a idade do usuario eh: " + i);
-    //    }
-    //    else
-    //    {
-    //        printf("a idade do usuario nao eh: " + i);
-    //   }
-    //    
-    //    i = i + 1;
-    //}
+    while(i != pss.idade + 1){
+     
+        if(i == pss.idade)
+        {
+            printf("a idade do usuario eh: " + i);
+        }
+        else
+        {
+            printf("a idade do usuario nao eh: " + i);
+       }
+        
+        i = i + 1;
+    }
 }
