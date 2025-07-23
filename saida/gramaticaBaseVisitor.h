@@ -1,5 +1,5 @@
 
-// Generated from gramatica.g4 by ANTLR 4.9.1
+// Generated from gramatica.g4 by ANTLR 4.13.2
 
 #pragma once
 
@@ -15,135 +15,135 @@
 class  gramaticaBaseVisitor : public gramaticaVisitor {
 public:
 
-  virtual antlrcpp::Any visitPrograma(gramaticaParser::ProgramaContext *ctx) override {
+  virtual std::any visitPrograma(gramaticaParser::ProgramaContext *ctx) override {
     return visitChildren(ctx);
   }
 
-  virtual antlrcpp::Any visitDeclaracaoClasse(gramaticaParser::DeclaracaoClasseContext *ctx) override {
+  virtual std::any visitDeclaracaoClasse(gramaticaParser::DeclaracaoClasseContext *ctx) override {
     return visitChildren(ctx);
   }
 
-  virtual antlrcpp::Any visitCorpoClasse(gramaticaParser::CorpoClasseContext *ctx) override {
+  virtual std::any visitCorpoClasse(gramaticaParser::CorpoClasseContext *ctx) override {
     return visitChildren(ctx);
   }
 
-  virtual antlrcpp::Any visitBlocoStart(gramaticaParser::BlocoStartContext *ctx) override {
+  virtual std::any visitBlocoStart(gramaticaParser::BlocoStartContext *ctx) override {
     return visitChildren(ctx);
   }
 
-  virtual antlrcpp::Any visitBloco(gramaticaParser::BlocoContext *ctx) override {
+  virtual std::any visitBloco(gramaticaParser::BlocoContext *ctx) override {
     return visitChildren(ctx);
   }
 
-  virtual antlrcpp::Any visitComando(gramaticaParser::ComandoContext *ctx) override {
+  virtual std::any visitComando(gramaticaParser::ComandoContext *ctx) override {
     return visitChildren(ctx);
   }
 
-  virtual antlrcpp::Any visitDeclaracaoVariavel(gramaticaParser::DeclaracaoVariavelContext *ctx) override {
+  virtual std::any visitDeclaracaoVariavel(gramaticaParser::DeclaracaoVariavelContext *ctx) override {
     return visitChildren(ctx);
   }
 
-  virtual antlrcpp::Any visitAtribuicao(gramaticaParser::AtribuicaoContext *ctx) override {
+  virtual std::any visitAtribuicao(gramaticaParser::AtribuicaoContext *ctx) override {
     return visitChildren(ctx);
   }
 
-  virtual antlrcpp::Any visitEstruturaWhile(gramaticaParser::EstruturaWhileContext *ctx) override {
+  virtual std::any visitEstruturaWhile(gramaticaParser::EstruturaWhileContext *ctx) override {
     return visitChildren(ctx);
   }
 
-  virtual antlrcpp::Any visitEstruturaIf(gramaticaParser::EstruturaIfContext *ctx) override {
+  virtual std::any visitEstruturaIf(gramaticaParser::EstruturaIfContext *ctx) override {
     return visitChildren(ctx);
   }
 
-  virtual antlrcpp::Any visitEstruturaElsif(gramaticaParser::EstruturaElsifContext *ctx) override {
+  virtual std::any visitEstruturaElsif(gramaticaParser::EstruturaElsifContext *ctx) override {
     return visitChildren(ctx);
   }
 
-  virtual antlrcpp::Any visitEstruturaElse(gramaticaParser::EstruturaElseContext *ctx) override {
+  virtual std::any visitEstruturaElse(gramaticaParser::EstruturaElseContext *ctx) override {
     return visitChildren(ctx);
   }
 
-  virtual antlrcpp::Any visitCondicao(gramaticaParser::CondicaoContext *ctx) override {
+  virtual std::any visitCondicao(gramaticaParser::CondicaoContext *ctx) override {
     return visitChildren(ctx);
   }
 
-  virtual antlrcpp::Any visitCondicaoAnd(gramaticaParser::CondicaoAndContext *ctx) override {
+  virtual std::any visitCondicaoAnd(gramaticaParser::CondicaoAndContext *ctx) override {
     return visitChildren(ctx);
   }
 
-  virtual antlrcpp::Any visitCondicaoNot(gramaticaParser::CondicaoNotContext *ctx) override {
+  virtual std::any visitCondicaoNot(gramaticaParser::CondicaoNotContext *ctx) override {
     return visitChildren(ctx);
   }
 
-  virtual antlrcpp::Any visitCondicaoPrimaria(gramaticaParser::CondicaoPrimariaContext *ctx) override {
+  virtual std::any visitCondicaoPrimaria(gramaticaParser::CondicaoPrimariaContext *ctx) override {
     return visitChildren(ctx);
   }
 
-  virtual antlrcpp::Any visitOperadorComparacao(gramaticaParser::OperadorComparacaoContext *ctx) override {
+  virtual std::any visitOperadorComparacao(gramaticaParser::OperadorComparacaoContext *ctx) override {
     return visitChildren(ctx);
   }
 
-  virtual antlrcpp::Any visitNovaInstancia(gramaticaParser::NovaInstanciaContext *ctx) override {
+  virtual std::any visitNovaInstancia(gramaticaParser::NovaInstanciaContext *ctx) override {
     return visitChildren(ctx);
   }
 
-  virtual antlrcpp::Any visitExpressao(gramaticaParser::ExpressaoContext *ctx) override {
+  virtual std::any visitExpressao(gramaticaParser::ExpressaoContext *ctx) override {
     return visitChildren(ctx);
   }
 
-  virtual antlrcpp::Any visitExpressaoSoma(gramaticaParser::ExpressaoSomaContext *ctx) override {
+  virtual std::any visitExpressaoSoma(gramaticaParser::ExpressaoSomaContext *ctx) override {
     return visitChildren(ctx);
   }
 
-  virtual antlrcpp::Any visitExpressaoProduto(gramaticaParser::ExpressaoProdutoContext *ctx) override {
+  virtual std::any visitExpressaoProduto(gramaticaParser::ExpressaoProdutoContext *ctx) override {
     return visitChildren(ctx);
   }
 
-  virtual antlrcpp::Any visitExpressaoPrimaria(gramaticaParser::ExpressaoPrimariaContext *ctx) override {
+  virtual std::any visitExpressaoPrimaria(gramaticaParser::ExpressaoPrimariaContext *ctx) override {
     return visitChildren(ctx);
   }
 
-  virtual antlrcpp::Any visitComandoPrint(gramaticaParser::ComandoPrintContext *ctx) override {
+  virtual std::any visitComandoPrint(gramaticaParser::ComandoPrintContext *ctx) override {
     return visitChildren(ctx);
   }
 
-  virtual antlrcpp::Any visitComandoScan(gramaticaParser::ComandoScanContext *ctx) override {
+  virtual std::any visitComandoScan(gramaticaParser::ComandoScanContext *ctx) override {
     return visitChildren(ctx);
   }
 
-  virtual antlrcpp::Any visitDeclaracaoFuncao(gramaticaParser::DeclaracaoFuncaoContext *ctx) override {
+  virtual std::any visitDeclaracaoFuncao(gramaticaParser::DeclaracaoFuncaoContext *ctx) override {
     return visitChildren(ctx);
   }
 
-  virtual antlrcpp::Any visitParametros(gramaticaParser::ParametrosContext *ctx) override {
+  virtual std::any visitParametros(gramaticaParser::ParametrosContext *ctx) override {
     return visitChildren(ctx);
   }
 
-  virtual antlrcpp::Any visitParametro(gramaticaParser::ParametroContext *ctx) override {
+  virtual std::any visitParametro(gramaticaParser::ParametroContext *ctx) override {
     return visitChildren(ctx);
   }
 
-  virtual antlrcpp::Any visitBlocoFuncao(gramaticaParser::BlocoFuncaoContext *ctx) override {
+  virtual std::any visitBlocoFuncao(gramaticaParser::BlocoFuncaoContext *ctx) override {
     return visitChildren(ctx);
   }
 
-  virtual antlrcpp::Any visitComandoRetorno(gramaticaParser::ComandoRetornoContext *ctx) override {
+  virtual std::any visitComandoRetorno(gramaticaParser::ComandoRetornoContext *ctx) override {
     return visitChildren(ctx);
   }
 
-  virtual antlrcpp::Any visitChamadaFuncao(gramaticaParser::ChamadaFuncaoContext *ctx) override {
+  virtual std::any visitChamadaFuncao(gramaticaParser::ChamadaFuncaoContext *ctx) override {
     return visitChildren(ctx);
   }
 
-  virtual antlrcpp::Any visitArgumentos(gramaticaParser::ArgumentosContext *ctx) override {
+  virtual std::any visitArgumentos(gramaticaParser::ArgumentosContext *ctx) override {
     return visitChildren(ctx);
   }
 
-  virtual antlrcpp::Any visitAcesso(gramaticaParser::AcessoContext *ctx) override {
+  virtual std::any visitAcesso(gramaticaParser::AcessoContext *ctx) override {
     return visitChildren(ctx);
   }
 
-  virtual antlrcpp::Any visitTipo(gramaticaParser::TipoContext *ctx) override {
+  virtual std::any visitTipo(gramaticaParser::TipoContext *ctx) override {
     return visitChildren(ctx);
   }
 

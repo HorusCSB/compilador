@@ -1,0 +1,7 @@
+# Target labels
+ utfcpp
+# Source files and their labels
+/home/tcc/Projetos/compilador/antlr4_runtime_cpp/build/runtime/CMakeFiles/utfcpp-download
+/home/tcc/Projetos/compilador/antlr4_runtime_cpp/build/runtime/CMakeFiles/utfcpp-download.rule
+/home/tcc/Projetos/compilador/antlr4_runtime_cpp/build/runtime/utfcpp-prefix/src/utfcpp-stamp/utfcpp-download.rule
+/home/tcc/Projetos/compilador/antlr4_runtime_cpp/build/runtime/utfcpp-prefix/src/utfcpp-stamp/utfcpp-mkdir.rule

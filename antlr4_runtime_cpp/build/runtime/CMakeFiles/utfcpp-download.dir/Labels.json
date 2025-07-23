@@ -1,0 +1,25 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "/home/tcc/Projetos/compilador/antlr4_runtime_cpp/build/runtime/CMakeFiles/utfcpp-download"
+		},
+		{
+			"file" : "/home/tcc/Projetos/compilador/antlr4_runtime_cpp/build/runtime/CMakeFiles/utfcpp-download.rule"
+		},
+		{
+			"file" : "/home/tcc/Projetos/compilador/antlr4_runtime_cpp/build/runtime/utfcpp-prefix/src/utfcpp-stamp/utfcpp-download.rule"
+		},
+		{
+			"file" : "/home/tcc/Projetos/compilador/antlr4_runtime_cpp/build/runtime/utfcpp-prefix/src/utfcpp-stamp/utfcpp-mkdir.rule"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"utfcpp"
+		],
+		"name" : "utfcpp-download"
+	}
+}

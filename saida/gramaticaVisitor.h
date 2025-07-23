@@ -1,5 +1,5 @@
 
-// Generated from gramatica.g4 by ANTLR 4.9.1
+// Generated from gramatica.g4 by ANTLR 4.13.2
 
 #pragma once
 
@@ -19,71 +19,71 @@ public:
   /**
    * Visit parse trees produced by gramaticaParser.
    */
-    virtual antlrcpp::Any visitPrograma(gramaticaParser::ProgramaContext *context) = 0;
+    virtual std::any visitPrograma(gramaticaParser::ProgramaContext *context) = 0;
 
-    virtual antlrcpp::Any visitDeclaracaoClasse(gramaticaParser::DeclaracaoClasseContext *context) = 0;
+    virtual std::any visitDeclaracaoClasse(gramaticaParser::DeclaracaoClasseContext *context) = 0;
 
-    virtual antlrcpp::Any visitCorpoClasse(gramaticaParser::CorpoClasseContext *context) = 0;
+    virtual std::any visitCorpoClasse(gramaticaParser::CorpoClasseContext *context) = 0;
 
-    virtual antlrcpp::Any visitBlocoStart(gramaticaParser::BlocoStartContext *context) = 0;
+    virtual std::any visitBlocoStart(gramaticaParser::BlocoStartContext *context) = 0;
 
-    virtual antlrcpp::Any visitBloco(gramaticaParser::BlocoContext *context) = 0;
+    virtual std::any visitBloco(gramaticaParser::BlocoContext *context) = 0;
 
-    virtual antlrcpp::Any visitComando(gramaticaParser::ComandoContext *context) = 0;
+    virtual std::any visitComando(gramaticaParser::ComandoContext *context) = 0;
 
-    virtual antlrcpp::Any visitDeclaracaoVariavel(gramaticaParser::DeclaracaoVariavelContext *context) = 0;
+    virtual std::any visitDeclaracaoVariavel(gramaticaParser::DeclaracaoVariavelContext *context) = 0;
 
-    virtual antlrcpp::Any visitAtribuicao(gramaticaParser::AtribuicaoContext *context) = 0;
+    virtual std::any visitAtribuicao(gramaticaParser::AtribuicaoContext *context) = 0;
 
-    virtual antlrcpp::Any visitEstruturaWhile(gramaticaParser::EstruturaWhileContext *context) = 0;
+    virtual std::any visitEstruturaWhile(gramaticaParser::EstruturaWhileContext *context) = 0;
 
-    virtual antlrcpp::Any visitEstruturaIf(gramaticaParser::EstruturaIfContext *context) = 0;
+    virtual std::any visitEstruturaIf(gramaticaParser::EstruturaIfContext *context) = 0;
 
-    virtual antlrcpp::Any visitEstruturaElsif(gramaticaParser::EstruturaElsifContext *context) = 0;
+    virtual std::any visitEstruturaElsif(gramaticaParser::EstruturaElsifContext *context) = 0;
 
-    virtual antlrcpp::Any visitEstruturaElse(gramaticaParser::EstruturaElseContext *context) = 0;
+    virtual std::any visitEstruturaElse(gramaticaParser::EstruturaElseContext *context) = 0;
 
-    virtual antlrcpp::Any visitCondicao(gramaticaParser::CondicaoContext *context) = 0;
+    virtual std::any visitCondicao(gramaticaParser::CondicaoContext *context) = 0;
 
-    virtual antlrcpp::Any visitCondicaoAnd(gramaticaParser::CondicaoAndContext *context) = 0;
+    virtual std::any visitCondicaoAnd(gramaticaParser::CondicaoAndContext *context) = 0;
 
-    virtual antlrcpp::Any visitCondicaoNot(gramaticaParser::CondicaoNotContext *context) = 0;
+    virtual std::any visitCondicaoNot(gramaticaParser::CondicaoNotContext *context) = 0;
 
-    virtual antlrcpp::Any visitCondicaoPrimaria(gramaticaParser::CondicaoPrimariaContext *context) = 0;
+    virtual std::any visitCondicaoPrimaria(gramaticaParser::CondicaoPrimariaContext *context) = 0;
 
-    virtual antlrcpp::Any visitOperadorComparacao(gramaticaParser::OperadorComparacaoContext *context) = 0;
+    virtual std::any visitOperadorComparacao(gramaticaParser::OperadorComparacaoContext *context) = 0;
 
-    virtual antlrcpp::Any visitNovaInstancia(gramaticaParser::NovaInstanciaContext *context) = 0;
+    virtual std::any visitNovaInstancia(gramaticaParser::NovaInstanciaContext *context) = 0;
 
-    virtual antlrcpp::Any visitExpressao(gramaticaParser::ExpressaoContext *context) = 0;
+    virtual std::any visitExpressao(gramaticaParser::ExpressaoContext *context) = 0;
 
-    virtual antlrcpp::Any visitExpressaoSoma(gramaticaParser::ExpressaoSomaContext *context) = 0;
+    virtual std::any visitExpressaoSoma(gramaticaParser::ExpressaoSomaContext *context) = 0;
 
-    virtual antlrcpp::Any visitExpressaoProduto(gramaticaParser::ExpressaoProdutoContext *context) = 0;
+    virtual std::any visitExpressaoProduto(gramaticaParser::ExpressaoProdutoContext *context) = 0;
 
-    virtual antlrcpp::Any visitExpressaoPrimaria(gramaticaParser::ExpressaoPrimariaContext *context) = 0;
+    virtual std::any visitExpressaoPrimaria(gramaticaParser::ExpressaoPrimariaContext *context) = 0;
 
-    virtual antlrcpp::Any visitComandoPrint(gramaticaParser::ComandoPrintContext *context) = 0;
+    virtual std::any visitComandoPrint(gramaticaParser::ComandoPrintContext *context) = 0;
 
-    virtual antlrcpp::Any visitComandoScan(gramaticaParser::ComandoScanContext *context) = 0;
+    virtual std::any visitComandoScan(gramaticaParser::ComandoScanContext *context) = 0;
 
-    virtual antlrcpp::Any visitDeclaracaoFuncao(gramaticaParser::DeclaracaoFuncaoContext *context) = 0;
+    virtual std::any visitDeclaracaoFuncao(gramaticaParser::DeclaracaoFuncaoContext *context) = 0;
 
-    virtual antlrcpp::Any visitParametros(gramaticaParser::ParametrosContext *context) = 0;
+    virtual std::any visitParametros(gramaticaParser::ParametrosContext *context) = 0;
 
-    virtual antlrcpp::Any visitParametro(gramaticaParser::ParametroContext *context) = 0;
+    virtual std::any visitParametro(gramaticaParser::ParametroContext *context) = 0;
 
-    virtual antlrcpp::Any visitBlocoFuncao(gramaticaParser::BlocoFuncaoContext *context) = 0;
+    virtual std::any visitBlocoFuncao(gramaticaParser::BlocoFuncaoContext *context) = 0;
 
-    virtual antlrcpp::Any visitComandoRetorno(gramaticaParser::ComandoRetornoContext *context) = 0;
+    virtual std::any visitComandoRetorno(gramaticaParser::ComandoRetornoContext *context) = 0;
 
-    virtual antlrcpp::Any visitChamadaFuncao(gramaticaParser::ChamadaFuncaoContext *context) = 0;
+    virtual std::any visitChamadaFuncao(gramaticaParser::ChamadaFuncaoContext *context) = 0;
 
-    virtual antlrcpp::Any visitArgumentos(gramaticaParser::ArgumentosContext *context) = 0;
+    virtual std::any visitArgumentos(gramaticaParser::ArgumentosContext *context) = 0;
 
-    virtual antlrcpp::Any visitAcesso(gramaticaParser::AcessoContext *context) = 0;
+    virtual std::any visitAcesso(gramaticaParser::AcessoContext *context) = 0;
 
-    virtual antlrcpp::Any visitTipo(gramaticaParser::TipoContext *context) = 0;
+    virtual std::any visitTipo(gramaticaParser::TipoContext *context) = 0;
 
 
 };

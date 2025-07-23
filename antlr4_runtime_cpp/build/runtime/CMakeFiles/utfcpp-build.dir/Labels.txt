@@ -1,0 +1,11 @@
+# Target labels
+ utfcpp
+# Source files and their labels
+/home/tcc/Projetos/compilador/antlr4_runtime_cpp/build/runtime/CMakeFiles/utfcpp-build
+/home/tcc/Projetos/compilador/antlr4_runtime_cpp/build/runtime/CMakeFiles/utfcpp-build.rule
+/home/tcc/Projetos/compilador/antlr4_runtime_cpp/build/runtime/utfcpp-prefix/src/utfcpp-stamp/utfcpp-build.rule
+/home/tcc/Projetos/compilador/antlr4_runtime_cpp/build/runtime/utfcpp-prefix/src/utfcpp-stamp/utfcpp-configure.rule
+/home/tcc/Projetos/compilador/antlr4_runtime_cpp/build/runtime/utfcpp-prefix/src/utfcpp-stamp/utfcpp-patch_disconnected.rule
+/home/tcc/Projetos/compilador/antlr4_runtime_cpp/build/runtime/utfcpp-prefix/src/utfcpp-stamp/utfcpp-update_disconnected.rule
+/home/tcc/Projetos/compilador/antlr4_runtime_cpp/build/runtime/utfcpp-prefix/src/utfcpp-stamp/utfcpp-download.rule
+/home/tcc/Projetos/compilador/antlr4_runtime_cpp/build/runtime/utfcpp-prefix/src/utfcpp-stamp/utfcpp-mkdir.rule
